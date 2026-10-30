@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shadowstar Syndicate</title>
+<style>
+:root{--bg:#0a0618;--panel:#150d2c;--panel2:#1d1240;--line:#3a2a73;--txt:#e8e2ff;--dim:#9a8fc7;--pink:#ff3ea5;--cyan:#38e8ff;--gold:#ffc83d;--red:#ff4466;--green:#4dff9a}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 20% 0,#2a1160 0,transparent 55%),radial-gradient(ellipse at 90% 100%,#4a0f4f 0,transparent 50%),var(--bg);color:var(--txt);font:15px/1.4 "Trebuchet MS",system-ui,sans-serif;min-height:100vh}
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+#app{position:relative;z-index:1;max-width:1250px;margin:0 auto;padding:12px}
+h1{margin:0;font-size:24px;letter-spacing:3px;text-transform:uppercase;background:linear-gradient(90deg,var(--pink),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+h1 small{display:block;font-size:11px;letter-spacing:2px;color:var(--dim);-webkit-text-fill-color:var(--dim)}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:10px}
+.hud{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.chip{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-weight:bold}
+.chip b{color:var(--gold)}
+.alert{display:flex;gap:4px;align-items:center}
+.alert i{width:18px;height:18px;border-radius:4px;background:#2a1d55;border:1px solid var(--line)}
+.alert i.on{background:var(--red);box-shadow:0 0 10px var(--red);animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.55}}
+.ticker{background:#000a;border:1px solid var(--line);border-radius:8px;padding:6px 12px;color:var(--cyan);font-size:13px;margin-bottom:10px;font-style:italic}
+.ticker b{color:var(--pink);font-style:normal;letter-spacing:1px}
+main{display:grid;grid-template-columns:300px 1fr 300px;gap:12px}
+@media(max-width:1000px){main{grid-template-columns:1fr}}
+.panel{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:12px}
+.panel h2{margin:0 0 8px;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--pink)}
+.nemo{display:flex;gap:10px;align-items:center}
+.nemo svg{width:84px;height:84px;flex:none;background:#0b0620;border-radius:50%;border:2px solid var(--cyan)}
+.stat{display:flex;justify-content:space-between;font-size:14px;padding:2px 0}
+.hp{letter-spacing:2px;color:var(--red)}
+.tag{display:inline-block;font-size:10px;font-weight:bold;letter-spacing:1px;padding:1px 6px;border-radius:5px;margin-right:4px}
+.t-legal{background:#12532f;color:var(--green)}.t-haz{background:#5c1d2a;color:var(--red)}.t-ill{background:#4b1c5e;color:#e29bff}
+.t-rest{background:#0f4350;color:var(--cyan)}.t-jail{background:#6b1d1d;color:#fff}
+button{font:inherit;cursor:pointer;border:1px solid var(--line);background:#2a1a5e;color:var(--txt);border-radius:9px;padding:7px 12px;transition:.12s}
+button:hover:not(:disabled){background:#3e2896;border-color:var(--cyan);transform:translateY(-1px)}
+button:disabled{opacity:.4;cursor:not-allowed}
+button.big{width:100%;padding:12px;font-size:17px;font-weight:bold;letter-spacing:2px;background:linear-gradient(90deg,#b0126b,#5b2bd6);border:0;box-shadow:0 0 18px #ff3ea555}
+button.sel{border-color:var(--gold);box-shadow:0 0 10px #ffc83d66;background:#4a3a10}
+.missions{display:grid;gap:10px}
+.mcard{border:1px solid var(--line);border-radius:12px;padding:10px;background:#120a2a;position:relative}
+.mcard.sel{border-color:var(--gold);box-shadow:0 0 14px #ffc83d44}
+.mcard.empty{opacity:.45;text-align:center;font-style:italic;padding:22px}
+.mcard h3{margin:0 0 3px;font-size:17px}
+.mcard p{margin:3px 0 7px;color:var(--dim);font-size:13px}
+.mrow{display:flex;gap:10px;flex-wrap:wrap;font-size:13px;align-items:center;justify-content:space-between}
+.timer{position:absolute;right:10px;top:8px;font-size:12px;color:var(--dim)}
+.timer.low{color:var(--red)}
+.pct{font-weight:bold}
+.log{height:420px;overflow:auto;font-size:13px;display:flex;flex-direction:column-reverse}
+.log div{padding:4px 0;border-bottom:1px dashed #2a1d55}
+.log .good{color:var(--green)}.log .bad{color:var(--red)}.log .gold{color:var(--gold)}.log .dim{color:var(--dim)}.log .turn{color:var(--cyan);font-weight:bold}
+.fac{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
+.fac button{font-size:13px}
+.die{display:inline-block;width:30px;height:30px;line-height:30px;text-align:center;border-radius:7px;background:#2a1d55;margin:2px;font-weight:bold;animation:pop .35s both}
+.die.s{background:#12532f;color:var(--green)}.die.six{background:#9a6b00;color:#fff;box-shadow:0 0 8px var(--gold)}.die.one{background:#5c1d2a;color:var(--red)}
+@keyframes pop{from{transform:rotate(-200deg) scale(.2);opacity:0}}
+#modal{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;z-index:10;padding:14px}
+#modal .box{background:linear-gradient(180deg,#241557,#150d2c);border:2px solid var(--pink);border-radius:16px;max-width:520px;width:100%;padding:20px;box-shadow:0 0 40px #ff3ea566;max-height:90vh;overflow:auto}
+#modal h2{margin:0 0 8px;color:var(--cyan);letter-spacing:2px}
+#modal .btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;justify-content:flex-end}
+.order{font-size:13px;color:var(--gold);min-height:18px}
+.small{font-size:12px;color:var(--dim)}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<div id="app">
+<header>
+  <h1>Shadowstar Syndicate<small>Est. last Tuesday · Licensed in no known jurisdiction</small></h1>
+  <div class="hud">
+    <div class="chip">Turn <b id="hTurn">1</b></div>
+    <div class="chip">Credits <b id="hCr">0</b>c</div>
+    <div class="chip alert" title="Space Police alertness"><span style="font-size:12px;color:var(--dim);margin-right:4px">ALERT</span><span id="hAlert" class="alert"></span></div>
+    <button id="surf" title="Space surf rock">🎸 Surf rock: off</button>
+  </div>
+</header>
+<div class="ticker"><b>GALACTIC REPUBLIC NEWS:</b> <span id="news"></span></div>
+<main>
+  <section>
+    <div class="panel">
+      <h2>Agent</h2>
+      <div class="nemo">
+        <svg viewBox="0 0 100 100"><defs><radialGradient id="sk" cx=".5" cy=".4"><stop offset="0" stop-color="#7df0d0"/><stop offset="1" stop-color="#2aa6a0"/></radialGradient></defs>
+        <g stroke="#1f8f9a" stroke-width="7" fill="none" stroke-linecap="round"><path d="M30 40Q8 55 18 85"/><path d="M38 45Q22 70 34 94"/><path d="M62 45Q78 70 66 94"/><path d="M70 40Q92 55 82 85"/><path d="M50 40Q50 75 50 96"/></g>
+        <ellipse cx="50" cy="40" rx="27" ry="30" fill="url(#sk)"/>
+        <ellipse cx="40" cy="40" rx="6" ry="8" fill="#fff"/><ellipse cx="60" cy="40" rx="6" ry="8" fill="#fff"/>
+        <circle cx="41" cy="41" r="3.5" fill="#220a44"/><circle cx="61" cy="41" r="3.5" fill="#220a44"/>
+        <path d="M42 56Q50 63 58 56" stroke="#7a1d55" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M24 22Q50 2 76 22L72 28Q50 14 28 28Z" fill="#1b1033"/><circle cx="50" cy="14" r="3" fill="var(--pink)"/></svg>
+        <div><b style="font-size:17px">Nemo</b><div class="small">Captain of the freighter Nostromo.<br>Bigger on the inside. Trust me.</div><div id="nTags"></div></div>
+      </div>
+      <div id="nStats" style="margin-top:8px"></div>
+    </div>
+    <div class="panel">
+      <h2>Empire</h2>
+      <div id="empire"></div>
+      <div class="fac">
+        <button id="bCan">Build Cantina<br><small>100c</small></button>
+        <button id="bSell">Sell Cantina<br><small>+25c</small></button>
+        <button id="bArena" style="grid-column:span 2">Build Monster Arena Pit<br><small>1000c · needs 2 monsters</small></button>
+      </div>
+      <div class="small" style="margin-top:6px">One building action per turn. Construction takes a turn.</div>
+    </div>
+  </section>
+  <section>
+    <div class="panel">
+      <h2>Contracts <span class="small" style="text-transform:none;letter-spacing:0">(pick one, or rest, or just chill)</span></h2>
+      <div class="missions" id="missions"></div>
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+        <button id="bRest" class="">😴 Rest <span class="small">(+1 HP, Rested)</span></button>
+        <button id="bIdle">🎶 Busy Doing Nothing</button>
+        <button id="bBail" style="margin-left:auto">⛓ Bail out Nemo (100c)</button>
+      </div>
+      <div class="order" id="order" style="margin-top:8px"></div>
+    </div>
+    <button class="big" id="bEnd">END TURN ▸</button>
+  </section>
+  <section>
+    <div class="panel"><h2>Syndicate Ledger</h2><div class="log" id="log"></div></div>
+  </section>
+</main>
+</div>
+<div id="modal"><div class="box" id="mbox"></div></div>
+
+<script>
+/* ---------- data ---------- */
+const MT={
+ smuggle:{name:'Smuggle',stat:'sneak',r:[1,5],pay:[20,100],legal:false,haz:false,mult:1,desc:'Move spicy cargo between planets. Customs hate this one trick.',
+   ok:['The crates hummed suspiciously, but nobody asked.','A customs droid was bribed with a single sandwich.','Nostromo slipped through like a tentacle through a keyhole.'],
+   no:['The cargo got "confiscated". By a guy named Dave. Not a cop.','The buyer never showed. The crates smell worse now.']},
+ raid:{name:'Raid',stat:'power',r:[1,5],pay:[50,250],legal:false,haz:true,mult:2,desc:'A heist. Pays big, and the police notice twice as easily.',
+   ok:['Vault cracked. Nemo carried it out in a tentacle-shaped bag.','You left a calling card: a tiny cantina coaster.'],
+   no:['The vault door was a decoy. The real vault laughed at you.','Alarm. Retreat. Dignity: not recovered.']},
+ bribe:{name:'Bribe Officials',stat:'charm',r:[1,5],pay:null,legal:false,haz:false,mult:.5,desc:'Costs 100c up front. Lowers alert by 1 and some of the money trickles back.',
+   ok:['The Deputy Undersecretary of Looking Away accepts your envelope.','A senator suddenly remembers nothing, beautifully.'],
+   no:['The official was incorruptible. Also, you lost the envelope.','He took the money and called his mom. Awkward.']},
+ hunt:{name:'Monster Hunt',stat:'power',r:[3,5],pay:null,legal:false,haz:true,mult:1,desc:'Catch a gigantic monster as a pet. You need 2 for the Pit.',
+   ok:['It bit Nemo, then fell in love with her. A new pet is born.','Tranq darts, a net, and a lot of pizza. Monster acquired.'],
+   no:['The monster ate the net, the tranq, and the pizza.','It escaped through a wall. Not a door. A wall.']},
+ goons:{name:'Recruit Goons',stat:'charm',r:[1,3],pay:null,legal:false,haz:false,mult:1,desc:'Hire muscle. Each goon gives Nemo +1 Power forever.',
+   ok:['A hulking fella signs on for dental and snacks.','Three dockworkers join. One is a robot. Close enough.'],
+   no:['The recruits wanted a union. You walked away.','Nobody wants to join a crime org with a mission statement that long.']},
+ cantina:{name:'Organize Cantina Network',stat:'org',r:[1,3],pay:[5,15],per:true,legal:true,haz:false,mult:1,desc:'One-time bonus: 5-15c per cantina you own right now.',
+   ok:['Synergy. Shared napkins. Profit.','Your cantinas negotiated a bulk deal on neon.'],
+   no:['The spreadsheet had a division by zero. Space is that big.']},
+ cargo:{name:'Risky Cargo',stat:'sneak',r:[1,3],pay:[20,60],legal:true,haz:true,mult:1,desc:'Legal freight out of pirate country. Pirates did not read the contract.',
+   ok:['You outran a pirate skiff with eleven seconds of fuel.','Delivered. Slightly on fire.'],
+   no:['Pirates took a cut. The cut was the whole cargo.']},
+ guard:{name:'Bodyguard',stat:'power',r:[1,3],pay:[20,60],legal:true,haz:true,mult:1,desc:'Stand next to a rich noble and look expensive.',
+   ok:['The noble survived the gala. His cravat did not.','Nobody dared touch the noble. Nemo glared once.'],
+   no:['The noble fired you for "intimidating the canapés".']},
+ deal:{name:'Deal',stat:'org',r:[1,3],pay:[10,30],legal:true,haz:false,mult:1,desc:'Haggle a good price. Nothing illegal. Mostly.',
+   ok:['You turned a bad deal into a slightly less bad one for them.','Haggled the price down to "a favor and a hat".'],
+   no:['The merchant was just a very persuasive wall.']},
+ show:{name:'Showtime',stat:'charm',r:[1,3],pay:[10,30],legal:true,haz:false,mult:1,desc:'Legal entertainment for the paying public. Wholesome-ish.',
+   ok:['The crowd loved the tentacle juggling act.','Standing ovation. Somebody threw a credit chip. It was a tip.'],
+   no:['The sound system played polka at a goth night.']}
+};
+const STATN={sneak:'Sneak',charm:'Charm',power:'Power',org:'Organization'};
+const NEWS=['Chancellor assures citizens: "crime is down, because we stopped counting it."','Senate debates banning cantinas. Senate cantina closes for lunch.','Space Police Commissioner "very optimistic" about "a mysterious pattern of nothing happening".','Monster Mash league denies existing. Monster Mash league sells out arena.','Galactic Republic budget shows 40% of funds spent on "paper clips, extra large".','Local tentacle girl spotted at several places. Police say "probably not related."','Crypto bro buys small moon. Unclear why.','Surf rock radio station declared a "wellness practice" by planetary authorities.','Inspector Vex promises to "personally look into" the missing crates, again.','Customs droids unionize. Nobody reads the demands.','Bribes down 3% this quarter, officials "deeply concerned about integrity".'];
+const NEWSHI=['ALERT: Police checkpoints tripled. Citizens urged to "look innocent".','Inspector Vex has a wall of string and a lot of coffee. Beware.','Sirens heard above every spaceport. Cantina owners sweat nervously.'];
+
+/* ---------- state ---------- */
+let S,busy=false;
+function R(a,b){return a+Math.floor(Math.random()*(b-a+1))}
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function newGame(){
+  S={turn:1,c:150,alert:0,hp:3,jailed:false,rested:false,goons:0,monsters:0,cantinas:0,arena:0,
+     build:null,order:{kind:'idle'},bailed:false,over:null,log:[],missions:[null,null,null],stat:{sneak:3,charm:2,power:1,org:1}};
+  fill();log('Shadowstar Syndicate opens for business. 150c, one agent, big dreams.','gold');
+  log('— Turn 1 —','turn');setNews();
+}
+function fill(){for(let i=0;i<3;i++)if(!S.missions[i])S.missions[i]=genMission()}
+function genMission(){
+  const have=S.missions.filter(Boolean).map(m=>m.type);
+  let keys=Object.keys(MT).filter(k=>!have.includes(k));let k=pick(keys.length?keys:Object.keys(MT));
+  const d=MT[k];const risk=R(d.r[0],d.r[1]);
+  return {type:k,risk,timer:R(3,9)};
+}
+function reward(m){const d=MT[m.type];if(!d.pay)return 0;const t=(m.risk-d.r[0])/(d.r[1]-d.r[0]);
+  let v=d.pay[0]+(d.pay[1]-d.pay[0])*t;return d.per?Math.round(v):Math.round(v/5)*5}
+function pow(){return S.stat.power+S.goons}
+function sv(k){return k==='power'?pow():S.stat[k]}
+function log(t,c=''){S.log.push({t,c});}
+function setNews(){S.news=S.alert>=3&&Math.random()<.6?pick(NEWSHI):pick(NEWS)}
+
+/* ---------- dice ---------- */
+function roll(n){return Array.from({length:n},()=>R(1,6))}
+function scoreOf(d){return d.reduce((a,x)=>a+(x>=6?2:x>=4?1:0),0)}
+function faux(d){return d.filter(x=>x===1).length>d.filter(x=>x===6).length}
+function diceHTML(d){return d.map((x,i)=>`<span class="die ${x===6?'six':x>=4?'s':x===1?'one':''}" style="animation-delay:${i*70}ms">${x}</span>`).join('')}
+function chance(n,target,bonus){ // P(score+bonus>=target)
+  let dist=[1];for(let i=0;i<n;i++){const nd=Array(dist.length+2).fill(0);dist.forEach((p,k)=>{nd[k]+=p*.5;nd[k+1]+=p/3;nd[k+2]+=p/6});dist=nd}
+  let p=0;dist.forEach((q,k)=>{if(k+bonus>=target)p+=q});return p}
+function catchP(m){const d=MT[m.type];if(d.legal)return 0;return Math.min(1,S.alert*.1*d.mult)}
+
+/* ---------- modal ---------- */
+function modal(html,btns){return new Promise(res=>{const m=document.getElementById('modal'),b=document.getElementById('mbox');
+  b.innerHTML=html+'<div class="btns">'+btns.map((x,i)=>`<button data-i="${i}">${x.label}</button>`).join('')+'</div>';
+  m.style.display='flex';b.querySelectorAll('button').forEach(el=>el.onclick=()=>{m.style.display='none';res(btns[el.dataset.i].val)})})}
+
+/* ---------- actions ---------- */
+function setOrder(o){if(busy||S.over)return;
+  if(o.kind==='mission'&&(S.jailed||S.bailed))return;
+  if(o.kind==='rest'&&(S.jailed||S.bailed))return;
+  if(o.kind==='mission'&&MT[S.missions[o.idx].type]===MT.bribe&&S.c<100){flash('Bribes cost 100c up front.');return}
+  S.order=(S.order.kind===o.kind&&S.order.idx===o.idx)?{kind:'idle'}:o;render()}
+function flash(t){document.getElementById('order').textContent=t}
+function buildOrder(t){if(busy||S.over)return;
+  if(S.build===t){if(t==='cantina')S.c+=100;if(t==='arena')S.c+=1000;S.build=null;render();return}
+  if(S.build){const p=S.build;if(p==='cantina')S.c+=100;if(p==='arena')S.c+=1000}
+  if(t==='cantina'){if(S.c<100)return;S.c-=100}
+  if(t==='arena'){if(S.c<1000||S.monsters<2||S.arena)return;S.c-=1000}
+  if(t==='sell'&&S.cantinas<1)return;
+  S.build=t;render()}
+function dropMission(i){if(busy||S.over)return;if(S.order.kind==='mission'&&S.order.idx===i)S.order={kind:'idle'};
+  log(`You drop "${MT[S.missions[i].type].name}". A new contract arrives next turn.`,'dim');S.missions[i]=null;S.dropped=(S.dropped||[]).concat(i);render()}
+function bail(){if(busy||S.over||!S.jailed||S.c<100)return;S.c-=100;S.jailed=false;S.bailed=true;S.order={kind:'idle'};
+  log('You bail Nemo out for 100c. She waves from the lobby, smug and slightly damp.','gold');render()}
+
+async function endTurn(){
+  if(busy||S.over)return;busy=true;render();
+  const o=S.order;
+  if(o.kind==='rest'){
+    if(S.hp<3){S.hp++;}
+    S.rested=true;log('Nemo naps in the Nostromo\'s infinite hallways. +1 HP, Rested (+1 to next test).','good');
+  }else if(o.kind==='mission'){
+    await runMission(o.idx);
+  }else if(!S.jailed&&!S.bailed){log('You chill in a cantina and listen to space surf rock. Zero crimes. Pure vibes.','dim')}
+  if(S.over){busy=false;return finish()}
+  // fade
+  if(S.alert>0&&Math.random()<.05){S.alert--;log('The heat fades a little. Alert −1.','good')}
+  // income
+  if(S.cantinas>0){S.c+=S.cantinas*5;log(`Cantinas earn ${S.cantinas*5}c.`,'gold')}
+  if(S.arena){S.c+=100;log('Monster Arena Pit ticket sales: +100c.','gold')}
+  // build
+  const b=S.build;
+  if(b==='cantina'){S.cantinas++;log('A new Cantina opens. The neon sign flickers on.','good')}
+  if(b==='sell'){S.cantinas--;S.c+=25;log('You sell a Cantina for 25c. The bartender cries.','dim')}
+  if(b==='arena'){S.arena=1;log('THE MONSTER ARENA PIT IS OPEN!','gold')}
+  S.build=null;
+  // jail check
+  if(S.jailed&&S.c<100){S.over={win:false,msg:'Nemo rots in a Republic cell and you cannot afford the 100c bail. The Syndicate dissolves. Game over.'}}
+  // missions timers
+  const dr=S.dropped||[];S.dropped=[];
+  S.missions.forEach((m,i)=>{if(m){m.timer--;if(m.timer<=0){log(`Contract "${MT[m.type].name}" expired.`,'dim');S.missions[i]=null}}});
+  // refill those that were empty before this turn processed (dropped) and any consumed by mission earlier
+  fill();
+  S.turn++;S.bailed=false;S.order={kind:'idle'};
+  if(!S.over){log(`— Turn ${S.turn} —`,'turn');setNews()}
+  if(S.arena&&!S.over&&!S.won){S.won=1;S.over={win:true,msg:`The Monster Mash Arena Pit roars open on turn ${S.turn-1}. Stable income and entertainment for life. The Syndicate is eternal.`}}
+  busy=false;render();if(S.over)finish();
+}
+
+async function runMission(i){
+  const m=S.missions[i],d=MT[m.type];
+  S.missions[i]=null;
+  if(m.type==='bribe'){if(S.c<100){log('You cannot afford the bribe money anymore. Mission cancelled.','bad');return}S.c-=100}
+  // caught?
+  if(Math.random()<catchP(m)){
+    const target=1+Math.ceil(S.alert/2);
+    const ch=await modal(`<h2>🚨 POLICE! 🚨</h2><p>Space Police block the way during <b>${d.name}</b>. Alert ${S.alert} means they came prepared. Pick how Nemo gets out of this.<br><span class="small">Need ${target} successes. Resisting arrest is LEGAL. You already broke the law.</span></p>`,
+      [{label:`Bluff (Charm ${sv('charm')})`,val:'charm'},{label:`Shoot ⚠ (Power ${sv('power')})`,val:'power'},{label:`Hide (Sneak ${sv('sneak')})`,val:'sneak'},{label:`Defend (Org ${sv('org')})`,val:'org'}]);
+    const dice=roll(sv(ch));const sc=scoreOf(dice);const ok=sc>=target;
+    let extra='';
+    if(ch==='power'&&faux(dice)){S.hp--;extra='<p class="bad" style="color:var(--red)">Faux! A stray laser hits Nemo. −1 HP.</p>';log('Shoot-out! Nemo takes a hit. −1 HP.','bad')}
+    await modal(`<h2>${ok?'ESCAPED!':'BUSTED!'}</h2><div>${diceHTML(dice)}</div><p>${sc} / ${target} successes.</p>${extra}<p>${ok?'Nemo slips away and you carry on with the job.':'Cuffs on. Nemo is hauled off to a Republic cell. Contract lost.'}</p>`,[{label:'OK',val:1}]);
+    if(S.hp<=0){S.over={win:false,msg:'Nemo falls in the shootout. Captain of the Nostromo, gone. The Syndicate has no agents left. Game over.'};return}
+    if(!ok){S.jailed=true;log(`Nemo is jailed during ${d.name}. Bail: 100c.`,'bad');S.rested=false;
+      if(S.c<100)S.over={win:false,msg:'Nemo is captured and you cannot afford the 100c bail. The Syndicate folds. Game over.'};return}
+    log(`Nemo escapes the police using ${ch==='charm'?'Bluff':ch==='power'?'Shoot':ch==='sneak'?'Hide':'Defend'}.`,'good');
+  }
+  // main test
+  const n=sv(d.stat),bonus=S.rested?1:0;S.rested=false;
+  const dice=roll(n),sc=scoreOf(dice)+bonus,ok=sc>=m.risk,dbl=ok&&sc>=m.risk*2,fx=faux(dice);
+  let rew=0,res='';
+  if(ok){
+    if(m.type==='bribe'){const pct=20+(m.risk-1)*20;const back=pct;S.c+=back;S.alert=Math.max(0,S.alert-1);res=`Alert −1. ${pct}% of the money found its way back: +${back}c.`}
+    else if(m.type==='hunt'){S.monsters++;res=`Monster captured! You now have ${S.monsters}.`}
+    else if(m.type==='goons'){S.goons++;res=`A goon joins the crew. Power is now ${pow()}.`}
+    else{rew=reward(m)*(d.per?S.cantinas:1);S.c+=rew;res=rew?`+${rew}c.`:''}
+    if(dbl){S.c+=50;res+=' Double successes! +50c bonus.'}
+  }
+  const fl=[];
+  if(fx){
+    if(!d.legal&&S.alert<5){S.alert++;fl.push('FAUX: the cops caught a whiff. Alert +1.')}
+    if(d.haz){S.hp--;fl.push('FAUX: something went wrong. Nemo takes −1 HP.')}
+    if(!d.legal&&S.alert>=5&&!d.haz)fl.push('FAUX: but Alert is already maxed.');
+    if(!fl.length)fl.push('FAUX happened but this one was clean and legal. Lucky.');
+  }
+  const flav=pick(ok?d.ok:d.no);
+  log(`${d.name} (risk ${m.risk}): ${ok?'success':'failed'}. ${res} ${fl.join(' ')}`.trim(),ok?'good':'bad');
+  await modal(`<h2>${ok?'MISSION COMPLETE':'MISSION FAILED'} — ${d.name}</h2>
+    <p class="small">${STATN[d.stat]} ${n} dice${bonus?' + Rested bonus':''} vs risk ${m.risk}</p>
+    <div>${diceHTML(dice)}</div><p><b>${sc}</b> successes ${ok?'✔':'✘'}</p>
+    <p><i>${flav}</i></p>${res?`<p style="color:var(--green)">${res}</p>`:''}${fl.map(x=>`<p style="color:var(--red)">${x}</p>`).join('')}`,[{label:'Next',val:1}]);
+  if(S.hp<=0)S.over={win:false,msg:'Nemo did not make it. With no agents left, the Syndicate collapses. Game over.'};
+}
+
+async function finish(){
+  const w=S.over.win;
+  const r=await modal(`<h2>${w?'🏆 SYNDICATE VICTORY':'💀 GAME OVER'}</h2><p>${S.over.msg}</p><p class="small">Turns: ${S.turn} · Credits: ${S.c}c · Cantinas: ${S.cantinas}</p>`,w?[{label:'Keep playing',val:'c'},{label:'New game',val:'n'}]:[{label:'New game',val:'n'}]);
+  if(r==='n'){newGame();render()}else{S.over=null;render()}
+}
+
+/* ---------- render ---------- */
+function pcol(p){return p>.66?'var(--green)':p>.33?'var(--gold)':'var(--red)'}
+function render(){
+  const $=id=>document.getElementById(id);
+  $('hTurn').textContent=S.turn;$('hCr').textContent=S.c;
+  $('hAlert').innerHTML=[1,2,3,4,5].map(i=>`<i class="${i<=S.alert?'on':''}"></i>`).join('');
+  $('news').textContent=S.news;
+  $('nTags').innerHTML=(S.jailed?'<span class="tag t-jail">JAILED</span>':'')+(S.rested?'<span class="tag t-rest">RESTED +1</span>':'');
+  $('nStats').innerHTML=`<div class="stat"><span>HP</span><span class="hp">${'♥'.repeat(S.hp)}${'♡'.repeat(Math.max(0,3-S.hp))}</span></div>`+
+    ['sneak','charm','power','org'].map(k=>`<div class="stat"><span>${STATN[k]}</span><b>${sv(k)}${k==='power'&&S.goons?` <small style="color:var(--dim)">(1 + ${S.goons} goon${S.goons>1?'s':''})</small>`:''}</b></div>`).join('')+
+    `<div class="stat"><span>Monsters</span><b>${S.monsters} / 2</b></div>`;
+  const cons=S.build&&(S.build==='cantina'||S.build==='arena');
+  $('empire').innerHTML=`<div class="stat"><span>Cantinas</span><b>${S.cantinas} <small style="color:var(--dim)">(+${S.cantinas*5}c/turn)</small></b></div>
+    <div class="stat"><span>Monster Arena Pit</span><b>${S.arena?'OPEN':cons&&S.build==='arena'?'under construction':'—'}</b></div>`+(cons&&S.build==='cantina'?'<div class="small" style="color:var(--gold)">Cantina under construction…</div>':'');
+  const dis=busy||S.over;
+  $('bCan').disabled=dis||(S.c<100&&S.build!=='cantina');$('bCan').classList.toggle('sel',S.build==='cantina');
+  $('bSell').disabled=dis||S.cantinas<1;$('bSell').classList.toggle('sel',S.build==='sell');
+  $('bArena').disabled=dis||S.arena||((S.c<1000||S.monsters<2)&&S.build!=='arena');$('bArena').classList.toggle('sel',S.build==='arena');
+  const locked=S.jailed||S.bailed||dis;
+  $('missions').innerHTML=S.missions.map((m,i)=>{
+    if(!m)return `<div class="mcard empty">A fresh contract is on the way (arrives next turn)…</div>`;
+    const d=MT[m.type],n=sv(d.stat),p=chance(n,m.risk,S.rested?1:0),cp=catchP(m),r=reward(m);
+    const sel=S.order.kind==='mission'&&S.order.idx===i;
+    const pay=m.type==='bribe'?`Costs 100c · refund ${20+(m.risk-1)*20}%`:m.type==='hunt'?'Reward: 1 monster':m.type==='goons'?'Reward: +1 Power':d.per?`${reward(m)}c per cantina (${reward(m)*S.cantinas}c now)`:`${r}c`;
+    return `<div class="mcard ${sel?'sel':''}"><span class="timer ${m.timer<=2?'low':''}">⏳ ${m.timer} turn${m.timer>1?'s':''}</span>
+      <h3>${d.name}</h3>
+      <div>${d.legal?'<span class="tag t-legal">LEGAL</span>':'<span class="tag t-ill">ILLEGAL</span>'}${d.haz?'<span class="tag t-haz">HAZARD</span>':''}</div>
+      <p>${d.desc}</p>
+      <div class="mrow"><span>Risk <b>${m.risk}</b> · ${STATN[d.stat]} ${n}d6 · ${pay}</span>
+      <span>Success <span class="pct" style="color:${pcol(p)}">${Math.round(p*100)}%</span>${cp?` · Caught <span style="color:var(--red)">${Math.round(cp*100)}%</span>`:''}</span></div>
+      <div style="margin-top:8px;display:flex;gap:6px"><button ${locked?'disabled':''} onclick="setOrder({kind:'mission',idx:${i}})">${sel?'✔ Selected':'Dispatch Nemo'}</button><button ${dis?'disabled':''} onclick="dropMission(${i})">Drop</button></div></div>`}).join('');
+  $('bRest').disabled=locked;$('bRest').classList.toggle('sel',S.order.kind==='rest');
+  $('bIdle').classList.toggle('sel',S.order.kind==='idle');$('bIdle').disabled=dis;
+  $('bBail').disabled=dis||!S.jailed||S.c<100;$('bBail').style.display=S.jailed?'':'none';
+  $('bEnd').disabled=dis;
+  const o=S.order;let t='';
+  if(S.jailed)t='⛓ Nemo is in jail. Bail her out (100c) or she stays there.';
+  else if(o.kind==='mission')t=`Order: ${MT[S.missions[o.idx].type].name}`;
+  else if(o.kind==='rest')t='Order: Rest';
+  else t='Order: chill in the cantina';
+  if(S.build)t+=` · Build: ${S.build==='cantina'?'Cantina':S.build==='arena'?'Monster Arena Pit':'Sell Cantina'}`;
+  $('order').textContent=t;
+  $('log').innerHTML=S.log.slice(-60).map(l=>`<div class="${l.c}">${l.t}</div>`).join('');
+}
+
+/* ---------- surf rock ---------- */
+let ac,surf=false,tm,step=0;
+const riff=[0,3,7,3,0,3,7,3,-2,1,5,1,-2,1,5,12];
+function pluck(f,t){const o=ac.createOscillator(),g=ac.createGain(),fl=ac.createBiquadFilter();o.type='sawtooth';o.frequency.value=f;fl.type='lowpass';fl.frequency.value=1800;
+  g.gain.setValueAtTime(.09,t);g.gain.exponentialRampToValueAtTime(.001,t+.16);o.connect(fl);fl.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+.18)}
+function toggleSurf(){
+  surf=!surf;document.getElementById('surf').textContent='🎸 Surf rock: '+(surf?'on':'off');
+  if(surf){ac=ac||new (window.AudioContext||window.webkitAudioContext)();ac.resume();
+    tm=setInterval(()=>{const t=ac.currentTime;const n=riff[step%riff.length];pluck(164.8*Math.pow(2,n/12),t);if(step%4===0){pluck(82.4*Math.pow(2,riff[step%riff.length]/12),t)}step++},120)}
+  else clearInterval(tm)}
+
+/* ---------- stars ---------- */
+(function(){const c=document.getElementById('stars'),x=c.getContext('2d');let st=[];
+  function sz(){c.width=innerWidth;c.height=innerHeight;st=Array.from({length:120},()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.5+.3,s:Math.random()*.25+.05}))}
+  sz();addEventListener('resize',sz);
+  (function f(){x.clearRect(0,0,c.width,c.height);x.fillStyle='#fff';st.forEach(s=>{s.x-=s.s;if(s.x<0)s.x=c.width;x.globalAlpha=.4+.4*Math.sin(s.x/40);x.beginPath();x.arc(s.x,s.y,s.r,0,7);x.fill()});requestAnimationFrame(f)})()})();
+
+/* ---------- init ---------- */
+document.getElementById('bCan').onclick=()=>buildOrder('cantina');
+document.getElementById('bSell').onclick=()=>buildOrder('sell');
+document.getElementById('bArena').onclick=()=>buildOrder('arena');
+document.getElementById('bRest').onclick=()=>setOrder({kind:'rest'});
+document.getElementById('bIdle').onclick=()=>setOrder({kind:'idle'});
+document.getElementById('bBail').onclick=bail;
+document.getElementById('bEnd').onclick=endTurn;
+document.getElementById('surf').onclick=toggleSurf;
+newGame();render();
+modal(`<h2>SHADOWSTAR SYNDICATE</h2><p>You are a small, ambitious crime org in space, full of young, dynamic entrepreneurs with an elastic approach to law. Your only agent is <b>Nemo</b>, tentacle girl and captain of the Nostromo.</p>
+<p><b>Goal:</b> capture 2 monsters, save 1000c, and build the <b>Monster Arena Pit</b>.<br><b>Danger:</b> the Galactic Republic's Space Police. Each alert level adds a 10% chance to be caught on illegal jobs.<br><b>Dice:</b> roll d6 equal to the stat. 4-5 = 1 success, 6 = 2. More 1s than 6s is a FAUX.</p>
+<p class="small">Tip: Smuggle and Showtime pay the bills. Or just build a galaxy-wide cantina chain. Nobody will judge.</p>`,[{label:'Let\'s commit some light crimes',val:1}]);
+</script>
+</body>
+</html>
