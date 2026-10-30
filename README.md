@@ -35,12 +35,12 @@ We have... 1 agent. Each turn we can send our agent on 1 mission.
 **Nemo** captain of freighter Nostromo. It is bigger in the inside, believe me. And Nemo is tentacle girl. 
 Stats: Sneak 3, Charm 2, Power 1, Organization 1, HP 3
 
-** Bail Out ** If Agent is captured we can always bail them for 100c, if agent is captured and we dont have 100c we loose the game. 
-** Death ** If Agent HP drops to 0 it is dead, and removed, and we cant do anything about it. We can use Rest to restore HP. 
+**Bail Out** If Agent is captured we can always bail them for 100c, if agent is captured and we dont have 100c we loose the game. 
+**Death** If Agent HP drops to 0 it is dead, and removed, and we cant do anything about it. We can use Rest to restore HP. 
 
 ## Missions
 We ave 3 mission to choose from at the time. Each have timer of 3-9 turns of avaibility, after which it drops. We could drop any number of mission, and we will get new one but next turn. 
-** LEGAL ** This mission will not trigger POLICE ALERT 
+**LEGAL** This mission will not trigger POLICE ALERT 
 **HAZARD** This mission may trigger 1HP loss if FAUX. 
 
 ### Busy Doing Nothing LEGAL 
