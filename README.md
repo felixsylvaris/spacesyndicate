@@ -23,16 +23,16 @@ This is turn based game. There is no limit so far. What we can do:
 + We manage allertness
 
 ## Buy facility
-We can buy:
-**Cantina** 100c, gives +5c each turn flat. No limit. 
-Yes, it is possible we just turn into galaxy wide cantina chain, the smuggle is too much hustle and risk for what it is worth. Can sell for 25c. 
+We can buy:  
+**Cantina** 100c, gives +5c each turn flat. No limit.   
+Yes, it is possible we just turn into galaxy wide cantina chain, the smuggle is too much hustle and risk for what it is worth. Can sell for 25c.   
 **Monster Arena** 1000c, +100c a turn, we need capture 2 monsters first. 
 
 **Limit:** We can build one thing per turn, and it takes 1 turn. 
 
 ## Agents and Mission
 We have... 1 agent. Each turn we can send our agent on 1 mission. 
-**Nemo** captain of freighter Nostromo. It is bigger in the inside, believe me. And Nemo is tentacle girl. 
+**Nemo** captain of freighter Nostromo. It is bigger in the inside, believe me. And Nemo is tentacle girl.   
 Stats: Sneak 3, Charm 2, Power 1, Organization 1, HP 3
 
 **Bail Out** If Agent is captured we can always bail them for 100c, if agent is captured and we dont have 100c we loose the game. 
