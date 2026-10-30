@@ -28,7 +28,7 @@ We can buy:
 Yes, it is possible we just turn into galaxy wide cantina chain, the smuggle is too much hustle and risk for what it is worth. Can sell for 25c. 
 **Monster Arena** 1000c, +100c a turn, we need capture 2 monsters first. 
 
-** Limit: ** We can build one thing per turn, and it takes 1 turn. 
+**Limit:** We can build one thing per turn, and it takes 1 turn. 
 
 ## Agents and Mission
 We have... 1 agent. Each turn we can send our agent on 1 mission. 
@@ -41,7 +41,7 @@ Stats: Sneak 3, Charm 2, Power 1, Organization 1, HP 3
 ## Missions
 We ave 3 mission to choose from at the time. Each have timer of 3-9 turns of avaibility, after which it drops. We could drop any number of mission, and we will get new one but next turn. 
 ** LEGAL ** This mission will not trigger POLICE ALERT 
-** HAZARD ** This mission may trigger 1HP loss if FAUX. 
+**HAZARD** This mission may trigger 1HP loss if FAUX. 
 
 ### Busy Doing Nothing LEGAL 
 We dont HAVE TO pick mission or anything. No rest, no build, no mission. Just chill in cantina listening to space surf rock. 
