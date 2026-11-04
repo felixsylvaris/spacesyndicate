@@ -9,7 +9,7 @@
 *{box-sizing:border-box}
 body{margin:0;background:radial-gradient(ellipse at 20% 0,#2a1160 0,transparent 55%),radial-gradient(ellipse at 90% 100%,#4a0f4f 0,transparent 50%),var(--bg);color:var(--txt);font:15px/1.4 "Trebuchet MS",system-ui,sans-serif;min-height:100vh}
 #stars{position:fixed;inset:0;z-index:0;pointer-events:none}
-#app{position:relative;z-index:1;max-width:1250px;margin:0 auto;padding:12px}
+#app{position:relative;z-index:1;max-width:1300px;margin:0 auto;padding:12px}
 h1{margin:0;font-size:24px;letter-spacing:3px;text-transform:uppercase;background:linear-gradient(90deg,var(--pink),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
 h1 small{display:block;font-size:11px;letter-spacing:2px;color:var(--dim);-webkit-text-fill-color:var(--dim)}
 header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:10px}
@@ -22,17 +22,24 @@ header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:s
 @keyframes pulse{50%{opacity:.55}}
 .ticker{background:#000a;border:1px solid var(--line);border-radius:8px;padding:6px 12px;color:var(--cyan);font-size:13px;margin-bottom:10px;font-style:italic}
 .ticker b{color:var(--pink);font-style:normal;letter-spacing:1px}
-main{display:grid;grid-template-columns:300px 1fr 300px;gap:12px}
-@media(max-width:1000px){main{grid-template-columns:1fr}}
+main{display:grid;grid-template-columns:320px 1fr 290px;gap:12px}
+@media(max-width:1050px){main{grid-template-columns:1fr}}
 .panel{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:12px}
 .panel h2{margin:0 0 8px;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--pink)}
-.nemo{display:flex;gap:10px;align-items:center}
-.nemo svg{width:84px;height:84px;flex:none;background:#0b0620;border-radius:50%;border:2px solid var(--cyan)}
+.acard{display:flex;gap:10px;align-items:flex-start;padding:8px;border:1px solid var(--line);border-radius:12px;background:#120a2a;margin-bottom:8px}
+.acard.dead{opacity:.35;filter:grayscale(1)}
+.acard svg{width:64px;height:64px;flex:none;background:#0b0620;border-radius:50%;border:2px solid var(--cyan)}
+.acard .info{flex:1;min-width:0}
+.acard b.nm{font-size:16px}
+.acard .st{font-size:12px;color:var(--dim)}
+.acard .st b{color:var(--txt)}
+.acard .btns{display:flex;gap:5px;margin-top:5px;flex-wrap:wrap}
+.acard .btns button{padding:3px 8px;font-size:12px}
 .stat{display:flex;justify-content:space-between;font-size:14px;padding:2px 0}
 .hp{letter-spacing:2px;color:var(--red)}
 .tag{display:inline-block;font-size:10px;font-weight:bold;letter-spacing:1px;padding:1px 6px;border-radius:5px;margin-right:4px}
 .t-legal{background:#12532f;color:var(--green)}.t-haz{background:#5c1d2a;color:var(--red)}.t-ill{background:#4b1c5e;color:#e29bff}
-.t-rest{background:#0f4350;color:var(--cyan)}.t-jail{background:#6b1d1d;color:#fff}
+.t-rest{background:#0f4350;color:var(--cyan)}.t-jail{background:#6b1d1d;color:#fff}.t-rec{background:#5a4a00;color:var(--gold)}.t-ord{background:#2a2a55;color:#cfc8ff}.t-patrol{background:#0a2a5c;color:#7ab8ff}
 button{font:inherit;cursor:pointer;border:1px solid var(--line);background:#2a1a5e;color:var(--txt);border-radius:9px;padding:7px 12px;transition:.12s}
 button:hover:not(:disabled){background:#3e2896;border-color:var(--cyan);transform:translateY(-1px)}
 button:disabled{opacity:.4;cursor:not-allowed}
@@ -41,6 +48,7 @@ button.sel{border-color:var(--gold);box-shadow:0 0 10px #ffc83d66;background:#4a
 .missions{display:grid;gap:10px}
 .mcard{border:1px solid var(--line);border-radius:12px;padding:10px;background:#120a2a;position:relative}
 .mcard.sel{border-color:var(--gold);box-shadow:0 0 14px #ffc83d44}
+.mcard.rec{border-color:#8a7000;background:#1a1330}
 .mcard.empty{opacity:.45;text-align:center;font-style:italic;padding:22px}
 .mcard h3{margin:0 0 3px;font-size:17px}
 .mcard p{margin:3px 0 7px;color:var(--dim);font-size:13px}
@@ -48,7 +56,10 @@ button.sel{border-color:var(--gold);box-shadow:0 0 10px #ffc83d66;background:#4a
 .timer{position:absolute;right:10px;top:8px;font-size:12px;color:var(--dim)}
 .timer.low{color:var(--red)}
 .pct{font-weight:bold}
-.log{height:420px;overflow:auto;font-size:13px;display:flex;flex-direction:column-reverse}
+.pill{padding:3px 9px;font-size:12px;border-radius:14px}
+.assign{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.team{font-size:12px;color:var(--cyan);margin-top:5px}
+.log{height:520px;overflow:auto;font-size:13px;display:flex;flex-direction:column-reverse}
 .log div{padding:4px 0;border-bottom:1px dashed #2a1d55}
 .log .good{color:var(--green)}.log .bad{color:var(--red)}.log .gold{color:var(--gold)}.log .dim{color:var(--dim)}.log .turn{color:var(--cyan);font-weight:bold}
 .fac{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
@@ -80,25 +91,21 @@ button.sel{border-color:var(--gold);box-shadow:0 0 10px #ffc83d66;background:#4a
 <main>
   <section>
     <div class="panel">
-      <h2>Agent</h2>
-      <div class="nemo">
-        <svg viewBox="0 0 100 100"><defs><radialGradient id="sk" cx=".5" cy=".4"><stop offset="0" stop-color="#7df0d0"/><stop offset="1" stop-color="#2aa6a0"/></radialGradient></defs>
-        <g stroke="#1f8f9a" stroke-width="7" fill="none" stroke-linecap="round"><path d="M30 40Q8 55 18 85"/><path d="M38 45Q22 70 34 94"/><path d="M62 45Q78 70 66 94"/><path d="M70 40Q92 55 82 85"/><path d="M50 40Q50 75 50 96"/></g>
-        <ellipse cx="50" cy="40" rx="27" ry="30" fill="url(#sk)"/>
-        <ellipse cx="40" cy="40" rx="6" ry="8" fill="#fff"/><ellipse cx="60" cy="40" rx="6" ry="8" fill="#fff"/>
-        <circle cx="41" cy="41" r="3.5" fill="#220a44"/><circle cx="61" cy="41" r="3.5" fill="#220a44"/>
-        <path d="M42 56Q50 63 58 56" stroke="#7a1d55" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <path d="M24 22Q50 2 76 22L72 28Q50 14 28 28Z" fill="#1b1033"/><circle cx="50" cy="14" r="3" fill="var(--pink)"/></svg>
-        <div><b style="font-size:17px">Nemo</b><div class="small">Captain of the freighter Nostromo.<br>Bigger on the inside. Trust me.</div><div id="nTags"></div></div>
-      </div>
-      <div id="nStats" style="margin-top:8px"></div>
+      <h2>Agents</h2>
+      <div id="agents"></div>
+      <div class="small">Every agent gets one task per turn. A team test uses the <b>two best</b> values among participants. No extra maintenance for more agents.</div>
     </div>
     <div class="panel">
       <h2>Empire</h2>
       <div id="empire"></div>
+      <div id="items" style="margin-top:8px"></div>
+      <div class="fac" style="margin-top:6px"><button id="bNanBuy">Buy Nanites<br><small>125c</small></button><button id="bNanSell">Sell Nanites<br><small>+50c</small></button></div>
       <div class="fac">
-        <button id="bCan">Build Cantina<br><small>100c</small></button>
+        <button id="bCan">Build Cantina<br><small>100c · max 10</small></button>
         <button id="bSell">Sell Cantina<br><small>+25c</small></button>
+        <button id="bPalace" style="grid-column:span 2">Build Palace<br><small>1000c · one time · unlocks a 4th contract slot</small></button>
+        <button id="bSpace" style="grid-column:span 2">Build Spaceport Office<br><small>1000c · one time · +1 contract slot</small></button>
+        <button id="bLib" style="grid-column:span 2">Build Bestiary Library<br><small>1000c · one time · Monster Hunt missions get +1 die</small></button>
         <button id="bArena" style="grid-column:span 2">Build Monster Arena Pit<br><small>1000c · needs 2 monsters</small></button>
       </div>
       <div class="small" style="margin-top:6px">One building action per turn. Construction takes a turn.</div>
@@ -106,14 +113,9 @@ button.sel{border-color:var(--gold);box-shadow:0 0 10px #ffc83d66;background:#4a
   </section>
   <section>
     <div class="panel">
-      <h2>Contracts <span class="small" style="text-transform:none;letter-spacing:0">(pick one, or rest, or just chill)</span></h2>
+      <h2>Contracts <span class="small" style="text-transform:none;letter-spacing:0">(assign agents with the buttons on each card)</span></h2>
       <div class="missions" id="missions"></div>
-      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
-        <button id="bRest" class="">😴 Rest <span class="small">(+1 HP, Rested)</span></button>
-        <button id="bIdle">🎶 Busy Doing Nothing</button>
-        <button id="bBail" style="margin-left:auto">⛓ Bail out Nemo (100c)</button>
-      </div>
-      <div class="order" id="order" style="margin-top:8px"></div>
+      <div class="order" id="order" style="margin-top:10px"></div>
     </div>
     <button class="big" id="bEnd">END TURN ▸</button>
   </section>
@@ -125,21 +127,49 @@ button.sel{border-color:var(--gold);box-shadow:0 0 10px #ffc83d66;background:#4a
 <div id="modal"><div class="box" id="mbox"></div></div>
 
 <script>
-/* ---------- data ---------- */
+/* ---------- agents ---------- */
+const AG={
+ nemo:{name:'Nemo',stat:{sneak:3,charm:2,power:1,org:1},hp:3,note:'Captain of the Nostromo. Bigger on the inside. Tentacles.'},
+ grim:{name:'Grimlock King',stat:{sneak:1,charm:0,power:3,org:0},hp:5,note:'Dragonkin mercenary. Big axe, bigger anger issues. +1 Power when working alone.'},
+ green:{name:'Green',stat:{sneak:1,charm:1,power:1,org:1},hp:3,note:'Amoeba colony blob. No firm handshake, but eager for crime.'}
+};
+const PORT={
+ nemo:`<svg viewBox="0 0 100 100"><defs><radialGradient id="sk" cx=".5" cy=".4"><stop offset="0" stop-color="#7df0d0"/><stop offset="1" stop-color="#2aa6a0"/></radialGradient></defs><g stroke="#1f8f9a" stroke-width="7" fill="none" stroke-linecap="round"><path d="M30 40Q8 55 18 85"/><path d="M38 45Q22 70 34 94"/><path d="M62 45Q78 70 66 94"/><path d="M70 40Q92 55 82 85"/><path d="M50 40Q50 75 50 96"/></g><ellipse cx="50" cy="40" rx="27" ry="30" fill="url(#sk)"/><ellipse cx="40" cy="40" rx="6" ry="8" fill="#fff"/><ellipse cx="60" cy="40" rx="6" ry="8" fill="#fff"/><circle cx="41" cy="41" r="3.5" fill="#220a44"/><circle cx="61" cy="41" r="3.5" fill="#220a44"/><path d="M42 56Q50 63 58 56" stroke="#7a1d55" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M24 22Q50 2 76 22L72 28Q50 14 28 28Z" fill="#1b1033"/><circle cx="50" cy="14" r="3" fill="#ff3ea5"/></svg>`,
+ grim:`<svg viewBox="0 0 100 100"><path d="M22 36L10 8L34 24Z M78 36L90 8L66 24Z" fill="#d9d2b8"/><path d="M26 30Q50 10 74 30L80 62Q74 90 50 92Q26 90 20 62Z" fill="#b8402e"/><path d="M34 70Q50 82 66 70L62 82Q50 90 38 82Z" fill="#8a2a1e"/><path d="M30 44L46 50L30 54Z M70 44L54 50L70 54Z" fill="#ffd43d"/><circle cx="38" cy="50" r="2" fill="#000"/><circle cx="62" cy="50" r="2" fill="#000"/><path d="M40 66L44 74L48 66 M52 66L56 74L60 66" stroke="#fff" stroke-width="2.5" fill="none"/><path d="M34 40L48 44 M66 40L52 44" stroke="#3a0d08" stroke-width="3.5"/></svg>`,
+ green:`<svg viewBox="0 0 100 100"><path d="M18 78Q10 40 40 26Q56 14 72 30Q92 44 82 76Q70 92 48 90Q28 92 18 78Z" fill="#5dff8f" fill-opacity=".75" stroke="#2fd16a" stroke-width="3"/><ellipse cx="42" cy="50" rx="6" ry="8" fill="#fff"/><ellipse cx="62" cy="50" rx="6" ry="8" fill="#fff"/><circle cx="43" cy="52" r="3" fill="#0a3a1c"/><circle cx="63" cy="52" r="3" fill="#0a3a1c"/><path d="M44 68Q52 74 60 68" stroke="#0a3a1c" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="30" cy="72" r="4" fill="#b8ffd0" fill-opacity=".6"/><circle cx="74" cy="38" r="3" fill="#b8ffd0" fill-opacity=".6"/></svg>`
+};
+function mkAgent(id){const d=AG[id];return{id,name:d.name,stat:{...d.stat},maxHp:d.hp,hp:d.hp,jailed:false,rested:false,bailed:false,dead:false,item:null,broken:0,order:{kind:'idle'}}}
+/* CLD9 = 9 turn cooldown after use. The item stays in your stash and never goes back to the deck, so the deck runs dry over a game.
+   ONE USE = gone after use. noDeck = never drawn from the deck, only awarded. */
+const ITEMS={
+ laser:{name:'Lasersword',icon:'🗡',stat:'power',cd:9,txt:'+1 Power. CLD9'},
+ locker:{name:'Secret Locker',icon:'🧰',stat:'sneak',cd:9,txt:'+1 Sneak. CLD9'},
+ droid:{name:'Protocol Droid',icon:'🤖',stat:'org',cd:9,txt:'+1 Org. CLD9'},
+ suit:{name:'Body Suit Zero',icon:'🕺',stat:'charm',cd:9,txt:'+1 Charm. CLD9. Grimlock looks fabulous in it.'},
+ escape:{name:'Escape Route',icon:'🚪',cd:9,txt:'If busted, escape automatically, no roll. CLD9'},
+ medpack:{name:'Medpack',icon:'🩹',cd:9,txt:'Damage dealt to the holder is negated. CLD9'},
+ friend:{name:'Old Friend',icon:'🤝',once:true,txt:'+2 dice on every roll of the mission. ONE USE'},
+ goons:{name:'Goons',icon:'💪',stat:'power',cd:9,noDeck:true,txt:'+1 Power on the next mission, any agent. CLD9'},
+ notes:{name:"Frankenstein's Notes",icon:'📓',stat:'org',amt:2,once:true,noDeck:true,txt:'+2 Org on the next mission. ONE USE'}
+};
+
+/* ---------- missions ---------- */
+/* contract pool tiers: missions with from:N only enter the pool at turn N. Set EARLY_RISK_CAP to 99 to disable the early cap. */
+const MID_TURN=10,LATE_TURN=25,EARLY_RISK_CAP=3;
 const MT={
- smuggle:{name:'Smuggle',stat:'sneak',r:[1,5],pay:[20,100],legal:false,haz:false,mult:1,desc:'Move spicy cargo between planets. Customs hate this one trick.',
+ smuggle:{name:'Smuggle',stat:'sneak',r:[1,5],cap:true,pay:[20,100],legal:false,haz:false,mult:1,desc:'Move spicy cargo between planets. Customs hate this one trick.',
    ok:['The crates hummed suspiciously, but nobody asked.','A customs droid was bribed with a single sandwich.','Nostromo slipped through like a tentacle through a keyhole.'],
    no:['The cargo got "confiscated". By a guy named Dave. Not a cop.','The buyer never showed. The crates smell worse now.']},
- raid:{name:'Raid',stat:'power',r:[1,5],pay:[50,250],legal:false,haz:true,mult:2,desc:'A heist. Pays big, and the police notice twice as easily.',
-   ok:['Vault cracked. Nemo carried it out in a tentacle-shaped bag.','You left a calling card: a tiny cantina coaster.'],
+ raid:{name:'Raid',stat:'power',r:[1,5],cap:true,pay:[50,250],legal:false,haz:true,mult:2,flat:.2,desc:'A heist. Pays big, but the police notice twice as easily and always have a 20% chance to show up, even at Alert 0.',
+   ok:['Vault cracked. Loot carried out in a tentacle-shaped bag.','You left a calling card: a tiny cantina coaster.'],
    no:['The vault door was a decoy. The real vault laughed at you.','Alarm. Retreat. Dignity: not recovered.']},
- bribe:{name:'Bribe Officials',stat:'charm',r:[1,5],pay:null,legal:false,haz:false,mult:.5,desc:'Costs 100c up front. Lowers alert by 1 and some of the money trickles back.',
+ bribe:{name:'Bribe Officials',stat:'charm',r:[1,5],cap:true,cost:100,pay:null,legal:false,haz:false,mult:.5,desc:'Costs 100c up front. Lowers alert by 1 and some of the money trickles back.',
    ok:['The Deputy Undersecretary of Looking Away accepts your envelope.','A senator suddenly remembers nothing, beautifully.'],
    no:['The official was incorruptible. Also, you lost the envelope.','He took the money and called his mom. Awkward.']},
- hunt:{name:'Monster Hunt',stat:'power',r:[3,5],pay:null,legal:false,haz:true,mult:1,desc:'Catch a gigantic monster as a pet. You need 2 for the Pit.',
-   ok:['It bit Nemo, then fell in love with her. A new pet is born.','Tranq darts, a net, and a lot of pizza. Monster acquired.'],
+ hunt:{name:'Monster Hunt',stat:'power',r:[3,5],monster:true,pay:null,legal:false,haz:true,mult:1,desc:'Catch a gigantic monster as a pet. You need 2 for the Pit. Surplus monsters sell for 200c each, since bottomless pits and surprise hatches are in demand.',
+   ok:['It bit someone, then fell in love. A new pet is born.','Tranq darts, a net, and a lot of pizza. Monster acquired.'],
    no:['The monster ate the net, the tranq, and the pizza.','It escaped through a wall. Not a door. A wall.']},
- goons:{name:'Recruit Goons',stat:'charm',r:[1,3],pay:null,legal:false,haz:false,mult:1,desc:'Hire muscle. Each goon gives Nemo +1 Power forever.',
+ goons:{name:'Recruit Goons',stat:'charm',stats:['org','charm'],r:[2,2],once:true,pay:null,legal:true,haz:false,mult:1,desc:'Hire muscle through proper channels (Org or Charm, picked at random). Reward: the Goons item, +1 Power for any agent, 9 turn cooldown. One success only.',
    ok:['A hulking fella signs on for dental and snacks.','Three dockworkers join. One is a robot. Close enough.'],
    no:['The recruits wanted a union. You walked away.','Nobody wants to join a crime org with a mission statement that long.']},
  cantina:{name:'Organize Cantina Network',stat:'org',r:[1,3],pay:[5,15],per:true,legal:true,haz:false,mult:1,desc:'One-time bonus: 5-15c per cantina you own right now.',
@@ -149,17 +179,110 @@ const MT={
    ok:['You outran a pirate skiff with eleven seconds of fuel.','Delivered. Slightly on fire.'],
    no:['Pirates took a cut. The cut was the whole cargo.']},
  guard:{name:'Bodyguard',stat:'power',r:[1,3],pay:[20,60],legal:true,haz:true,mult:1,desc:'Stand next to a rich noble and look expensive.',
-   ok:['The noble survived the gala. His cravat did not.','Nobody dared touch the noble. Nemo glared once.'],
+   ok:['The noble survived the gala. His cravat did not.','Nobody dared touch the noble. One glare was enough.'],
    no:['The noble fired you for "intimidating the canapés".']},
  deal:{name:'Deal',stat:'org',r:[1,3],pay:[10,30],legal:true,haz:false,mult:1,desc:'Haggle a good price. Nothing illegal. Mostly.',
    ok:['You turned a bad deal into a slightly less bad one for them.','Haggled the price down to "a favor and a hat".'],
    no:['The merchant was just a very persuasive wall.']},
  show:{name:'Showtime',stat:'charm',r:[1,3],pay:[10,30],legal:true,haz:false,mult:1,desc:'Legal entertainment for the paying public. Wholesome-ish.',
    ok:['The crowd loved the tentacle juggling act.','Standing ovation. Somebody threw a credit chip. It was a tip.'],
-   no:['The sound system played polka at a goth night.']}
+   no:['The sound system played polka at a goth night.']},
+ artifact:{name:'Acquire Artifact',stat:'org',r:[1,1],pay:null,item:true,fallback:10,legal:true,haz:false,mult:1,desc:'Win a suspicious relic at auction, with paperwork and everything. Reward: an item from the deck.',
+   ok:['The auctioneer sells it to you for an undisclosed favor.','Authenticity certificate attached. Probably authentic.'],
+   no:['Outbid by a man in a very tall hat.','The relic turns out to be a paperweight.']},
+ gang:{name:'Crush Local Gang',stat:'power',r:[2,2],pay:null,item:true,fallback:30,legal:false,haz:true,mult:1,desc:'Persuade a local gang to hand over their stash and their enthusiasm. Reward: an item from the deck.',
+   ok:['The gang stash is yours. So are their questionable jackets.','Knuckles were applied. The gang took up gardening.'],
+   no:['The gang had a bigger gang. And a bigger gang behind that.','Retreat. Dignity: in a dumpster.']},
+ intel:{name:'Seek Intel',stat:'charm',r:[1,1],pay:null,item:true,fallback:10,legal:true,haz:false,mult:1,desc:'Buy drinks, nod sympathetically, collect gossip. Reward: an item from the deck.',
+   ok:['A bartender spills everything, including a drink.','Whispers lead you to a stash of useful gadgets.'],
+   no:['Everybody lied, confidently.','Your informant turns out to be a houseplant.']},
+ policestore:{name:'Break Police Storage',stat:'sneak',r:[3,3],pay:null,item:true,fallback:50,legal:false,haz:true,mult:1,desc:'Evidence lockers are just very secure shopping. Reward: an item from the deck.',
+   ok:['Locker 7 had everything. Locker 8 had a note: nice try.','The lockers were labeled EVIDENCE. Convenient for you.'],
+   no:['Motion sensors. Of course there were motion sensors.','An off-duty cop was napping. Awake now.']},
+ nanideal:{name:'Deal for Nanites',stat:'charm',r:[2,2],pay:null,payAfter:75,nanites:2,legal:true,haz:false,mult:1,desc:'A medic with questionable paperwork sells nanites in bulk. You pay 75c after success. Reward: 2 Nanites.',
+   ok:['The medic pours 2 vials into your hands and refuses a receipt.','A very good price, and a very bad smell. Worth it.'],
+   no:['The medic wanted payment in cookies. You had none.','The vials were sugar water.']},
+ nanirefine:{name:'Refine Nanites',stat:'org',r:[3,3],pay:null,payAfter:100,nanites:3,legal:true,haz:false,mult:1,desc:'Set up a tiny lab and cook raw nanite paste into medical grade. You pay 100c after success. Reward: 3 Nanites.',
+   ok:['The lab hummed, the paste glowed and nothing exploded. A good day.','Three clean batches. The lab techs ask for a raise.'],
+   no:['The paste turned out to be paint. Very good paint.','A tiny lab fire was a big lab fire.']},
+ existq:{name:'Existential Question',story:true,once:true,unlock:'slippery',
+   desc:'Green is anxious about his own existence. Who is he, where did he come from, where is he going? Did he really escape the jar, or is this a simulation he is hallucinating? Maybe we should investigate his nature.',
+   tests:[{label:'Ask around',stat:'charm',risk:2,legal:true,haz:false},{label:'Study the Archives',stat:'org',risk:1,legal:true,haz:false}],
+   payOpt:{cost:100,label:'Hire a Goomancer',text:'The Goomancer swirls a bucket of slime, mutters at a candle, and delivers a verdict for 100c.'},
+   abandon:{label:'Nonsense!',text:'Green is a blob. Blobs do not need meaning. Drop the whole matter.'},
+   result:'We learned that Green is not fully natural but the result of experiments by Doctor Frankenstein. We must find the doctor lab!',
+   ok:['The answer was in a very old, very damp book.','A fortune teller, a bartender and a dockworker all tell the same unsettling story.'],
+   no:['Everyone you asked answered with another question.','The archives were closed for a long lunch. A very long lunch.']},
+ slippery:{name:'Slippery Path',story:true,once:true,unlock:'whomonster',
+   desc:'We know that Green is the result of experiments, but we need to find the lab of the Mad Scientists.',
+   tests:[{label:'Ask around',stat:'charm',risk:3,legal:true,haz:false},{label:'Intimidate and interrogate',stat:'power',risk:3,legal:false,haz:true}],
+   payOpt:{cost:200,label:'Just hire a detective',text:'A tired detective in a wet coat takes 200c and four days of sleep, and returns with a map.'},
+   abandon:{label:'What a waste of time',text:'Green is fine as he is. Stop digging.'},
+   result:'We found Frankenstein lab on the surface of Jupiter. We can visit the doctor when ready.',
+   ok:['A trail of slime leads to a very expensive door.','The witness spoke fast, and in great detail.'],
+   no:['The trail ended at a very ordinary puddle.','The witness fainted. Then woke up and fainted again.']},
+ whomonster:{name:'Who Is Your Monster',story:true,once:true,unlock:'finalform',post:true,
+   desc:'We discovered the location of Doctor Frankenstein lab, the mad scientist who made Green what he is today. We plan to pay a visit.',
+   tests:[{label:'Sneak like a shadow',stat:'sneak',risk:4,legal:false,haz:true},{label:'Frontal assault',stat:'power',risk:4,legal:false,haz:true}],
+   payOpt:{cost:300,label:'Pretend to be a client',text:'You arrive in a very good suit with 300c in a very good briefcase. The doctor adores new customers.'},
+   abandon:{label:'Busy doing crime',text:'There is crime to be done. The doctor can wait forever.'},
+   result:'We confronted Frankenstein. He admits he made Green from swamp goo amoebas, to create the perfect assassin weapon. Green is just a biological weapon with anxiety.',
+   ok:['The lab is quiet, the doctor is waiting, and the kettle is on.','Doors open one by one. The doctor smiles, in a very bad way.'],
+   no:['The lab was full of alarms. The alarms were full of opinions.','Guard drones. Guard drones everywhere.']},
+ finalform:{name:'Final Form',story:true,once:true,final:true,post:true,
+   desc:'Green is at ease knowing his own nature, but wonders whether he should finish the doctor design.',
+   tests:[{label:'Experiment on Green to unlock his full potential',stat:'org',risk:2,legal:true,haz:true}],
+   abandon:{label:'What a chore',text:'Green is great as he is. This is where the storyline ends.'},
+   result:'The experiment worked. Green genome is mapped and he can be pushed toward something greener and meaner.',
+   ok:['The lab hummed, the vats glowed and Green giggled.','Green made a noise like a happy tuba.'],
+   no:['The vat sneezed. Green sneezed back.','Something went blorp. Nobody knows what.']},
+ smile:{name:'Grimlock: New Smile',once:true,prereq:()=>S.agents.some(a=>a.id==='grim'&&!a.dead),
+   desc:'Grimlock ate too many cookies and his fangs went crooked, which makes him even more grumpy. Fix them and he gains +1 Charm for good. One success only.',
+   tests:[{label:'Heist the local archeological museum for T-Rex fangs (+50c bonus)',stat:'sneak',risk:3,legal:false,haz:false,bonus:50},
+          {label:'Find an expert monster dentist',stat:'org',risk:1,legal:true,haz:false}],
+   ok:['The T-Rex fangs fit like a dream. Grimlock smiles. Everybody leaves the room.','The dentist uses a hammer, a chisel and surprising tenderness.'],
+   no:['The museum alarm was a polka tune. The guard was a polka fan.','The dentist fled when Grimlock opened his mouth.']},
+ protection:{name:'Protection Racket',stat:'charm',r:[3,4],pay:[60,140],from:MID_TURN,legal:false,haz:false,mult:1,desc:'Politely explain to local shopkeepers that accidents happen. Mostly to shopkeepers who skip payments.',
+   ok:['Every shopkeeper suddenly remembers the date payments are due.','A baker offers free pastries. You take the pastries and the money.'],
+   no:['The shopkeepers formed a cooperative. Of lawyers.','Your speech was great. Nobody was home to hear it.']},
+ armsdeal:{name:'Arms Deal',stat:'org',r:[3,5],pay:[150,350],from:MID_TURN,legal:false,haz:false,mult:1,desc:'Broker a quiet sale of very loud equipment. Paperwork is the hard part.',
+   ok:['Both sides think they got the better end. Both are right, for you.','The crates were labeled FRAGILE TOYS. Nobody opened them.'],
+   no:['The buyer wanted a refund policy. In writing.','The seller was an undercover accountant.']},
+ escort:{name:'Escort Convoy',stat:'power',r:[3,4],pay:[80,160],from:MID_TURN,legal:true,haz:true,mult:1,desc:'Guard a slow, valuable, very shootable convoy across pirate space.',
+   ok:['The convoy arrives intact, if a bit singed.','Pirates took one look and found other targets.'],
+   no:['The convoy was the pirates. Plot twist.','Three ships out, two ships in. Nobody explains the third.']},
+ corporate:{name:'Corporate Contract',stat:'org',r:[3,4],pay:[60,120],from:MID_TURN,legal:true,haz:false,mult:1,desc:'A respectable megacorp needs a very discreet vendor. Legal, and horribly dull.',
+   ok:['You sign eleven forms. Money arrives by lunch.','A vice president calls you a trusted partner. Weird, but pays.'],
+   no:['Compliance asked for a form that does not exist.','A competing vendor had a better slide deck.']},
+ hijack:{name:'Hijack Freighter',stat:'power',r:[4,5],pay:[200,400],from:LATE_TURN,legal:false,haz:true,mult:1,desc:'High stakes. A heavy freighter, an armed crew, and one very large payday.',
+   ok:['The freighter was yours in four minutes. The crew was very understanding.','Cargo bay full of premium goods. Insurance is going to cry.'],
+   no:['The freighter had a second, bigger freighter inside it.','The crew fought back. The crew was better at it.']},
+ casino:{name:'Casino Vault Job',stat:'sneak',r:[4,5],pay:[250,500],from:LATE_TURN,legal:false,haz:true,mult:1,desc:'High stakes. Lasers, guards, a very smug vault. Smooth is the only way.',
+   ok:['You left with the vault and the house band.','Nothing set off the alarm. Everything else set off the alarm. You were already gone.'],
+   no:['The vault was fake. The real vault was the casino.','A tipsy tourist wandered into the laser grid. You went with him.']},
+ senator:{name:'Bribe the Senator',stat:'charm',r:[4,5],cost:200,pay:null,from:LATE_TURN,legal:false,haz:false,mult:.5,desc:'High stakes. Costs 200c up front, but a friend in the Senate lowers Alert by 2.',
+   ok:['The Senator discovers a deep passion for budget cuts at the Space Police.','A new bill quietly dissolves two patrol units.'],
+   no:['The Senator took the cash and voted against you anyway.','He was incorruptible. At least until the next fiscal quarter.']},
+ elite:{name:'Elite Monster Hunt',stat:'power',r:[5,5],monster:true,pay:[500,500],from:LATE_TURN,legal:false,haz:true,mult:1,desc:'High stakes. A gigantic, famous monster. Collectors pay 500c for the bragging rights.',
+   ok:['The beast was huge, angry and very pricey. The buyer cried with joy.','You return with a monster and a story nobody will believe.'],
+   no:['The beast ate the net, the tranq and the lunch of the lead hunter.','It was famous for a reason. The reason was teeth.']},
+ recGreen:{name:'Recruit Green',recruit:true,agent:'green',unlock:'existq',legal:false,
+   desc:'Green owed money to a local crimelord and now sits in a jar on display in the Palace, a warning to other debtors. Pick your way in.',
+   payOpt:{cost:100,label:'Pay off the debt',text:'You slide 100c across the desk. The crimelord shrugs, hands you the jar, and says "no refunds". Green wobbles out, thrilled.'},
+   tests:[{label:'Sneak him out of the Palace at night',stat:'sneak',risk:3,legal:false,haz:false},
+          {label:'Crash the whole place, jar included',stat:'power',risk:4,legal:false,haz:true}],
+   ok:['The jar clinks softly. Green fits through a keyhole, because physics is optional.','Alarms scream. Explosions bloom. Green is delighted. Mostly delighted.'],
+   no:['A guard spots a suspiciously wobbly shadow. Mission blown.','The jar bounces off a wall. Green insists he is fine.']},
+ recGrim:{name:'Recruit Grimlock King',recruit:true,agent:'grim',legal:true,
+   desc:'Grimlock rests at a cantina, waiting for the next mysterious client. He has skills, if you have credits. Or you can catch his attention another way.',
+   payOpt:{cost:300,label:'Hire him outright',text:'300c goes into a lockbox. Grimlock pockets his axe-polish and says: "Fine. Who do I hit?"'},
+   tests:[{label:'Pitch him: fighting Big Monsters. Finally a worthy opponent',stat:'charm',risk:1,legal:true,haz:false},
+          {label:'Show him you are tough, too',stat:'power',risk:5,legal:true,haz:true}],
+   ok:['His eyes light up. "Big monsters? Why did you not say this first?"','He wipes blood off his lip and grins. "You hit like a tax audit. I respect that."'],
+   no:['He yawns. The cantina yawns with him.','He flicks you across the bar. Respectfully.']}
 };
-const STATN={sneak:'Sneak',charm:'Charm',power:'Power',org:'Organization'};
-const NEWS=['Chancellor assures citizens: "crime is down, because we stopped counting it."','Senate debates banning cantinas. Senate cantina closes for lunch.','Space Police Commissioner "very optimistic" about "a mysterious pattern of nothing happening".','Monster Mash league denies existing. Monster Mash league sells out arena.','Galactic Republic budget shows 40% of funds spent on "paper clips, extra large".','Local tentacle girl spotted at several places. Police say "probably not related."','Crypto bro buys small moon. Unclear why.','Surf rock radio station declared a "wellness practice" by planetary authorities.','Inspector Vex promises to "personally look into" the missing crates, again.','Customs droids unionize. Nobody reads the demands.','Bribes down 3% this quarter, officials "deeply concerned about integrity".'];
+const STATN={sneak:'Sneak',charm:'Charm',power:'Power',org:'Org'};
+const NEWS=['Chancellor assures citizens: "crime is down, because we stopped counting it."','Senate debates banning cantinas. Senate cantina closes for lunch.','Space Police Commissioner "very optimistic" about "a mysterious pattern of nothing happening".','Monster Mash league denies existing. Monster Mash league sells out arena.','Galactic Republic budget shows 40% of funds spent on "paper clips, extra large".','Several suspicious beings spotted around town. Police say "probably not related."','Crypto bro buys small moon. Unclear why.','Surf rock radio station declared a "wellness practice" by planetary authorities.','Inspector Vex promises to "personally look into" the missing crates, again.','Customs droids unionize. Nobody reads the demands.','Bribes down 3% this quarter, officials "deeply concerned about integrity".','Local jar-based debt collection "legally murky", says retired judge.'];
 const NEWSHI=['ALERT: Police checkpoints tripled. Citizens urged to "look innocent".','Inspector Vex has a wall of string and a lot of coffee. Beware.','Sirens heard above every spaceport. Cantina owners sweat nervously.'];
 
 /* ---------- state ---------- */
@@ -167,199 +290,346 @@ let S,busy=false;
 function R(a,b){return a+Math.floor(Math.random()*(b-a+1))}
 function pick(a){return a[Math.floor(Math.random()*a.length)]}
 function newGame(){
-  S={turn:1,c:150,alert:0,hp:3,jailed:false,rested:false,goons:0,monsters:0,cantinas:0,arena:0,
-     build:null,order:{kind:'idle'},bailed:false,over:null,log:[],missions:[null,null,null],stat:{sneak:3,charm:2,power:1,org:1}};
+  S={turn:1,c:150,alert:0,nanites:0,done:{},monsters:0,cantinas:0,arena:0,build:null,over:null,won:0,log:[],missions:[null,null,null,null,null],palace:0,spaceport:0,library:0,unlocked:{},storyDead:0,storyDone:0,deck:Object.keys(ITEMS).filter(k=>!ITEMS[k].noDeck),items:[],dropped:[],recruited:{},agents:[mkAgent('nemo')]};
   fill();log('Shadowstar Syndicate opens for business. 150c, one agent, big dreams.','gold');
   log('— Turn 1 —','turn');setNews();
 }
-function fill(){for(let i=0;i<3;i++)if(!S.missions[i])S.missions[i]=genMission()}
+function slots(){return 3+(S.palace?1:0)+(S.spaceport?1:0)}
+function libDice(m){return(S.library&&MT[m.type].monster)?1:0}
+function fill(){for(let i=0;i<slots();i++)if(!S.missions[i])S.missions[i]=genMission()}
+function announce(){
+  if(S.turn===MID_TURN){log('📣 Word is getting around. Bigger clients now offer contracts: Protection Racket, Arms Deal, Escort Convoy, Corporate Contract.','gold');S.news='Local syndicate "Shadowstar" now in the phone books of several very serious clients.'}
+  if(S.turn===LATE_TURN){log('📣 The underworld respects you. HIGH STAKES contracts are now on offer: Hijack Freighter, Casino Vault Job, Bribe the Senator, Elite Monster Hunt.','gold');S.news='Casino security chiefs quietly update their résumés.'}}
+function assignPatrol(){S.missions.forEach(m=>{if(m)m.patrol=false});if(S.alert<=0)return;
+  const c=[];for(let i=0;i<slots();i++){const m=S.missions[i];if(m&&!eff(m).legal)c.push(m)}
+  if(c.length){const m=pick(c);m.patrol=true;log(`🚓 A police patrol cruiser is tailing "${MT[m.type].name}". +20% bust risk.`,'bad')}}
+function drawItem(){if(!S.deck.length)return null;const k=Math.floor(Math.random()*S.deck.length);const id=S.deck.splice(k,1)[0];S.items.push({id,cd:0});return id}
+function consumeItem(a){if(!a.item)return;const id=a.item,it=ITEMS[id];a.item=null;
+  if(it.once)log(`${it.name} is used up and gone for good.`,'dim');
+  else if(it.cd){S.items.push({id,cd:it.cd+1});log(`${it.name} goes on cooldown (${it.cd} turns).`,'dim')}
+  else{S.deck.push(id);log(`${it.name} returns to the item deck.`,'dim')}}
 function genMission(){
   const have=S.missions.filter(Boolean).map(m=>m.type);
-  let keys=Object.keys(MT).filter(k=>!have.includes(k));let k=pick(keys.length?keys:Object.keys(MT));
-  const d=MT[k];const risk=R(d.r[0],d.r[1]);
-  return {type:k,risk,timer:R(3,9)};
+  const greenOk=S.agents.some(a=>a.id==='green'&&!a.dead);
+  const rec=Object.keys(MT).filter(k=>!have.includes(k)&&((MT[k].recruit&&!S.recruited[MT[k].agent])||(MT[k].story&&S.unlocked[k]&&!S.done[k]&&!S.storyDead&&greenOk)));
+  if(rec.length&&Math.random()<.3){const k=pick(rec);return{type:k,risk:MT[k].tests[0].risk,opt:0,timer:R(5,9)}}
+  const keys=Object.keys(MT).filter(k=>!MT[k].recruit&&!MT[k].story&&!have.includes(k)&&(MT[k].from||1)<=S.turn&&!(MT[k].once&&S.done[k])&&(!MT[k].prereq||MT[k].prereq()));
+  const k=pick(keys);const d=MT[k];
+  if(d.tests)return{type:k,risk:d.tests[0].risk,opt:0,timer:R(5,9)};
+  const hi=(d.cap&&S.turn<MID_TURN)?Math.min(d.r[1],Math.max(d.r[0],EARLY_RISK_CAP)):d.r[1];
+  return{type:k,risk:R(d.r[0],hi),opt:0,timer:R(3,9),stat:d.stats?pick(d.stats):undefined};
 }
-function reward(m){const d=MT[m.type];if(!d.pay)return 0;const t=(m.risk-d.r[0])/(d.r[1]-d.r[0]);
-  let v=d.pay[0]+(d.pay[1]-d.pay[0])*t;return d.per?Math.round(v):Math.round(v/5)*5}
-function pow(){return S.stat.power+S.goons}
-function sv(k){return k==='power'?pow():S.stat[k]}
-function log(t,c=''){S.log.push({t,c});}
+function eff(m){const d=MT[m.type];
+  if(d.tests){const t=d.tests[m.opt];return{stat:t.stat,risk:t.risk,legal:t.legal,haz:t.haz,mult:1,flat:0}}
+  return{stat:m.stat||d.stat,risk:m.risk,legal:d.legal,haz:d.haz,mult:d.mult,flat:d.flat||0}}
+function reward(m){const d=MT[m.type];if(!d.pay)return 0;const span=d.r[1]-d.r[0];const t=span?(m.risk-d.r[0])/span:0;
+  const v=d.pay[0]+(d.pay[1]-d.pay[0])*t;return d.per?Math.round(v):Math.round(v/5)*5}
+function log(t,c=''){S.log.push({t,c})}
 function setNews(){S.news=S.alert>=3&&Math.random()<.6?pick(NEWSHI):pick(NEWS)}
+function alive(){return S.agents.filter(a=>!a.dead)}
+function free(a){return !a.dead&&!a.jailed&&!a.bailed}
+function partsOf(i){return S.agents.filter(a=>free(a)&&a.order.kind==='mission'&&a.order.idx===i)}
 
-/* ---------- dice ---------- */
+/* ---------- stats & dice ---------- */
+function val(a,stat,alone){
+  return a.stat[stat]+(a.id==='grim'&&stat==='power'&&alone?1:0)+(a.item&&ITEMS[a.item].stat===stat?(ITEMS[a.item].amt||1):0)}
+function team(parts,stat,extra=0){
+  const alone=parts.length===1;
+  const l=parts.map(a=>({a,v:val(a,stat,alone)})).sort((x,y)=>(y.v-x.v)||((y.a.rested?1:0)-(x.a.rested?1:0)));
+  const top=l.slice(0,2);const base=top.reduce((s,x)=>s+x.v,0);
+  const ra=top.find(x=>x.a.rested);
+  const old=parts.filter(a=>a.item==='friend').length*2;
+  return{n:base+(ra?1:0)+old+extra,base,old,ra:ra?ra.a:null,
+    desc:top.map(x=>`${x.a.name} ${x.v}`).join(' + ')+(ra?' + 1 die (Rested)':'')+(old?` + ${old} dice (Old Friend)`:'')+(extra?` + ${extra} die (Bestiary Library)`:'')};
+}
 function roll(n){return Array.from({length:n},()=>R(1,6))}
 function scoreOf(d){return d.reduce((a,x)=>a+(x>=6?2:x>=4?1:0),0)}
 function faux(d){return d.filter(x=>x===1).length>d.filter(x=>x===6).length}
-function diceHTML(d){return d.map((x,i)=>`<span class="die ${x===6?'six':x>=4?'s':x===1?'one':''}" style="animation-delay:${i*70}ms">${x}</span>`).join('')}
-function chance(n,target,bonus){ // P(score+bonus>=target)
-  let dist=[1];for(let i=0;i<n;i++){const nd=Array(dist.length+2).fill(0);dist.forEach((p,k)=>{nd[k]+=p*.5;nd[k+1]+=p/3;nd[k+2]+=p/6});dist=nd}
-  let p=0;dist.forEach((q,k)=>{if(k+bonus>=target)p+=q});return p}
-function catchP(m){const d=MT[m.type];if(d.legal)return 0;return Math.min(1,S.alert*.1*d.mult)}
+function diceHTML(d){return d.length?d.map((x,i)=>`<span class="die ${x===6?'six':x>=4?'s':x===1?'one':''}" style="animation-delay:${i*70}ms">${x}</span>`).join(''):'<i class="small">no dice at all</i>'}
+function chance(n,target){let dist=[1];for(let i=0;i<n;i++){const nd=Array(dist.length+2).fill(0);dist.forEach((p,k)=>{nd[k]+=p*.5;nd[k+1]+=p/3;nd[k+2]+=p/6});dist=nd}
+  let p=0;dist.forEach((q,k)=>{if(k>=target)p+=q});return p}
+function catchP(m){const e=eff(m);if(e.legal)return 0;return Math.min(1,S.alert*.1*e.mult+(e.flat||0)+(m.patrol?.2:0))}
+function hurt(parts,sev=0){const live=parts.filter(a=>!a.dead);if(!live.length)return'';const a=pick(live);
+  if(a.item==='medpack')return `${a.name}'s Medpack absorbs the hit. No damage.`;
+  a.hp--;let t=`${a.name} takes −1 HP.`;
+  if(sev>0&&Math.random()<sev){a.broken=(a.broken||0)+1;t=`${a.name} takes a SERIOUS WOUND! 💔 A broken heart: Rest alone cannot heal it, only Nanites can.`}
+  if(a.hp<=0){a.dead=true;a.order={kind:'idle'};t+=` ${a.name} is dead.`}return t}
+function checkOver(){
+  if(S.over)return;const al=alive();
+  if(!al.length)S.over={win:false,msg:'Every agent of the Syndicate has fallen. Nobody is left to run the empire. Game over.'};
+  else if(al.every(a=>a.jailed)&&S.c<100)S.over={win:false,msg:'All your living agents are behind bars and you cannot afford the 100c bail. The Syndicate folds. Game over.'};
+}
 
 /* ---------- modal ---------- */
 function modal(html,btns){return new Promise(res=>{const m=document.getElementById('modal'),b=document.getElementById('mbox');
   b.innerHTML=html+'<div class="btns">'+btns.map((x,i)=>`<button data-i="${i}">${x.label}</button>`).join('')+'</div>';
   m.style.display='flex';b.querySelectorAll('button').forEach(el=>el.onclick=()=>{m.style.display='none';res(btns[el.dataset.i].val)})})}
 
-/* ---------- actions ---------- */
-function setOrder(o){if(busy||S.over)return;
-  if(o.kind==='mission'&&(S.jailed||S.bailed))return;
-  if(o.kind==='rest'&&(S.jailed||S.bailed))return;
-  if(o.kind==='mission'&&MT[S.missions[o.idx].type]===MT.bribe&&S.c<100){flash('Bribes cost 100c up front.');return}
-  S.order=(S.order.kind===o.kind&&S.order.idx===o.idx)?{kind:'idle'}:o;render()}
+/* ---------- player actions ---------- */
 function flash(t){document.getElementById('order').textContent=t}
+function setAgentOrder(id,kind){if(busy||S.over)return;const a=S.agents.find(x=>x.id===id);if(!a||!free(a))return;
+  a.order=(a.order.kind===kind)?{kind:'idle'}:{kind};render()}
+function assign(i,id){if(busy||S.over)return;const a=S.agents.find(x=>x.id===id),m=S.missions[i];if(!a||!m||!free(a))return;
+  if(a.order.kind==='mission'&&a.order.idx===i){a.order={kind:'idle'}}
+  else{if(MT[m.type].cost&&S.c<MT[m.type].cost){flash(`${MT[m.type].name} costs ${MT[m.type].cost}c up front.`);return}if(MT[m.type].payAfter&&S.c<MT[m.type].payAfter){flash(`${MT[m.type].name}: you need ${MT[m.type].payAfter}c on hand to pay after success.`);return}a.order={kind:'mission',idx:i}}
+  render()}
+function setOpt(i,k){if(busy||S.over)return;S.missions[i].opt=k;render()}
+const COST={cantina:100,arena:1000,palace:1000,spaceport:1000,library:1000};
 function buildOrder(t){if(busy||S.over)return;
-  if(S.build===t){if(t==='cantina')S.c+=100;if(t==='arena')S.c+=1000;S.build=null;render();return}
-  if(S.build){const p=S.build;if(p==='cantina')S.c+=100;if(p==='arena')S.c+=1000}
-  if(t==='cantina'){if(S.c<100)return;S.c-=100}
-  if(t==='arena'){if(S.c<1000||S.monsters<2||S.arena)return;S.c-=1000}
-  if(t==='sell'&&S.cantinas<1)return;
-  S.build=t;render()}
-function dropMission(i){if(busy||S.over)return;if(S.order.kind==='mission'&&S.order.idx===i)S.order={kind:'idle'};
-  log(`You drop "${MT[S.missions[i].type].name}". A new contract arrives next turn.`,'dim');S.missions[i]=null;S.dropped=(S.dropped||[]).concat(i);render()}
-function bail(){if(busy||S.over||!S.jailed||S.c<100)return;S.c-=100;S.jailed=false;S.bailed=true;S.order={kind:'idle'};
-  log('You bail Nemo out for 100c. She waves from the lobby, smug and slightly damp.','gold');render()}
+  if(S.build===t){S.c+=COST[t]||0;S.build=null;render();return}
+  const prev=S.build;if(prev)S.c+=COST[prev]||0;
+  let ok=true;
+  if(t==='cantina'&&(S.c<100||S.cantinas>=10))ok=false;
+  if(t==='arena'&&(S.c<1000||S.monsters<2||S.arena))ok=false;
+  if(t==='palace'&&(S.c<1000||S.palace))ok=false;
+  if(t==='spaceport'&&(S.c<1000||S.spaceport))ok=false;
+  if(t==='library'&&(S.c<1000||S.library))ok=false;
+  if(t==='sell'&&S.cantinas<1)ok=false;
+  if(!ok){if(prev)S.c-=COST[prev]||0;return}
+  S.c-=COST[t]||0;S.build=t;render()}
+function completeStory(d){
+  if(d.unlock)S.unlocked[d.unlock]=1;
+  if(d.final)S.storyDone=1;
+  log(`Storyline: ${d.result}`,'gold');
+  return d.result+(d.unlock?' A new storyline contract has entered the pool.':'')}
+async function storyPost(type){
+  if(type==='whomonster'){
+    const c=await modal(`<h2>Judgment Day</h2><p>Doctor Frankenstein is at your mercy. Green watches in silence, wondering what a weapon is allowed to want.</p>`,
+      [{label:'a) Who makes weapons, dies from weapons. KILL DOC (+2 Nanites)',val:'a'},{label:"b) To be a weapon is more than not to be. Spare him (Frankenstein's Notes item)",val:'b'}]);
+    if(c==='a'){S.nanites+=2;log(`Doctor Frankenstein is no more. +2 Nanites (${S.nanites} in stock).`,'gold')}
+    else{S.items.push({id:'notes',cd:0});log("Doctor Frankenstein is spared. You leave with Frankenstein's Notes: +2 Org, one use.",'gold')}
+  }
+  if(type==='finalform'){
+    const perks=[['sneak','a) Transparency (Sneak +1): become transparent to hide from sight'],['charm','b) Mimic (Charm +1): mimic others to gain their trust'],['power','c) Acid Split (Power +1): produce acid for combat, and for opening lockers'],['org','d) Brains in Limbs (Org +1): make your limbs anxious and independent']];
+    const c=await modal(`<h2>Final Form</h2><p>The genome of Green is mapped. We can push him toward something greener and meaner. What should it be?</p>`,perks.map(x=>({label:x[1],val:x[0]})));
+    const g=S.agents.find(x=>x.id==='green'&&!x.dead);
+    if(g){g.stat[c]++;log(`Green evolves: +1 ${STATN[c]} for good. Storyline complete.`,'gold')}
+    else log('Green is gone, so the new genome has nobody to live in. Storyline complete.','dim');
+    S.storyDone=1;
+  }
+}
+async function payStory(i){if(busy||S.over)return;const m=S.missions[i],d=MT[m.type];if(!d.payOpt||S.c<d.payOpt.cost)return;
+  busy=true;S.c-=d.payOpt.cost;S.missions[i]=null;
+  S.agents.forEach(a=>{if(a.order.kind==='mission'&&a.order.idx===i)a.order={kind:'idle'}});
+  S.done[m.type]=1;const res=completeStory(d);
+  log(`${d.name}: ${d.payOpt.label} (${d.payOpt.cost}c).`,'gold');render();
+  await modal(`<h2>${d.name.toUpperCase()}</h2><p>${d.payOpt.text}</p><p style="color:var(--green)">${res}</p>`,[{label:'Next',val:1}]);
+  if(d.post)await storyPost(m.type);
+  busy=false;render()}
+async function abandonStory(i){if(busy||S.over)return;const m=S.missions[i],d=MT[m.type];busy=true;
+  const c=await modal(`<h2>Abandon the storyline?</h2><p>${d.abandon.text}</p><p class="small">No more storyline missions will appear. This cannot be undone.</p>`,[{label:'Yes, abandon it',val:1},{label:'No, keep going',val:0}]);
+  if(c){S.storyDead=1;S.missions[i]=null;S.agents.forEach(a=>{if(a.order.kind==='mission'&&a.order.idx===i)a.order={kind:'idle'}});log(`Storyline abandoned: "${d.abandon.label}".`,'dim')}
+  busy=false;render()}
+function buyNanites(){if(busy||S.over||S.c<125)return;S.c-=125;S.nanites++;render()}
+function sellNanites(){if(busy||S.over||S.nanites<1)return;S.nanites--;S.c+=50;render()}
+function itemRow(a){
+  if(a.dead)return'';const dis=busy||S.over;
+  if(a.item){const it=ITEMS[a.item];return `<div class="small" style="margin-top:4px">${it.icon} <b>${it.name}</b> (${it.txt}) <button class="pill" ${dis?'disabled':''} onclick="detachItem('${a.id}')">✕</button></div>`}
+  if(!free(a))return'';
+  const seen=[...new Set(S.items.filter(x=>x.cd<=0).map(x=>x.id))];
+  if(!seen.length)return'';
+  return `<div class="btns">${seen.map(id=>`<button class="pill" ${dis?'disabled':''} title="${ITEMS[id].txt}" onclick="attachItem('${a.id}','${id}')">+ ${ITEMS[id].icon} ${ITEMS[id].name}</button>`).join('')}</div>`}
+function attachItem(aid,id){if(busy||S.over)return;const a=S.agents.find(x=>x.id===aid);if(!a||!free(a))return;
+  const k=S.items.findIndex(x=>x.id===id&&x.cd<=0);if(k<0)return;
+  if(a.item)S.items.push({id:a.item,cd:0});
+  S.items.splice(k,1);a.item=id;render()}
+function detachItem(aid){if(busy||S.over)return;const a=S.agents.find(x=>x.id===aid);if(!a||!a.item)return;
+  S.items.push({id:a.item,cd:0});a.item=null;render()}
+function dropMission(i){if(busy||S.over)return;S.agents.forEach(a=>{if(a.order.kind==='mission'&&a.order.idx===i)a.order={kind:'idle'}});
+  log(`You drop "${MT[S.missions[i].type].name}". A new contract arrives next turn.`,'dim');S.missions[i]=null;render()}
+function bail(id){if(busy||S.over)return;const a=S.agents.find(x=>x.id===id);if(!a||!a.jailed||S.c<100)return;
+  S.c-=100;a.jailed=false;a.bailed=true;a.order={kind:'idle'};
+  log(`You bail ${a.name} out for 100c. They are out, smug and slightly damp, but need the turn off.`,'gold');render()}
+async function payRecruit(i){if(busy||S.over)return;const m=S.missions[i],d=MT[m.type];if(S.c<d.payOpt.cost)return;
+  busy=true;S.c-=d.payOpt.cost;S.missions[i]=null;
+  S.agents.forEach(a=>{if(a.order.kind==='mission'&&a.order.idx===i)a.order={kind:'idle'}});
+  S.agents.push(mkAgent(d.agent));S.recruited[d.agent]=1;if(d.unlock)S.unlocked[d.unlock]=1;
+  log(`${AG[d.agent].name} joins the Syndicate (paid ${d.payOpt.cost}c).`,'gold');render();
+  await modal(`<h2>NEW AGENT: ${AG[d.agent].name.toUpperCase()}</h2><p>${d.payOpt.text}</p><p class="small">${AG[d.agent].note}</p>`,[{label:'Welcome aboard',val:1}]);
+  busy=false;render()}
 
+/* ---------- turn ---------- */
 async function endTurn(){
   if(busy||S.over)return;busy=true;render();
-  const o=S.order;
-  if(o.kind==='rest'){
-    if(S.hp<3){S.hp++;}
-    S.rested=true;log('Nemo naps in the Nostromo\'s infinite hallways. +1 HP, Rested (+1 to next test).','good');
-  }else if(o.kind==='mission'){
-    await runMission(o.idx);
-  }else if(!S.jailed&&!S.bailed){log('You chill in a cantina and listen to space surf rock. Zero crimes. Pure vibes.','dim')}
-  if(S.over){busy=false;return finish()}
-  // fade
-  if(S.alert>0&&Math.random()<.05){S.alert--;log('The heat fades a little. Alert −1.','good')}
-  // income
-  if(S.cantinas>0){S.c+=S.cantinas*5;log(`Cantinas earn ${S.cantinas*5}c.`,'gold')}
-  if(S.arena){S.c+=100;log('Monster Arena Pit ticket sales: +100c.','gold')}
-  // build
-  const b=S.build;
-  if(b==='cantina'){S.cantinas++;log('A new Cantina opens. The neon sign flickers on.','good')}
-  if(b==='sell'){S.cantinas--;S.c+=25;log('You sell a Cantina for 25c. The bartender cries.','dim')}
-  if(b==='arena'){S.arena=1;log('THE MONSTER ARENA PIT IS OPEN!','gold')}
-  S.build=null;
-  // jail check
-  if(S.jailed&&S.c<100){S.over={win:false,msg:'Nemo rots in a Republic cell and you cannot afford the 100c bail. The Syndicate dissolves. Game over.'}}
-  // missions timers
-  const dr=S.dropped||[];S.dropped=[];
+  let acted=false;
+  for(const a of S.agents){
+    if(free(a)&&a.order.kind==='rest'){acted=true;a.rested=true;const br=a.broken||0;if(br>0&&S.nanites>0){S.nanites--;a.broken--;a.hp++;log(`${a.name} rests while nanites rebuild a broken heart. −1 Nanites (${S.nanites} left). Rested.`,'good')}else{if(a.hp<a.maxHp-br)a.hp++;log(`${a.name} naps. +1 HP${br?' (broken hearts need Nanites)':''}, Rested (+1 die on a test).`,'good')}}
+  }
+  for(let i=0;i<slots();i++){
+    const m=S.missions[i];if(!m)continue;const parts=partsOf(i);
+    if(parts.length){acted=true;await runMission(i,parts);checkOver();if(S.over)break}
+  }
+  if(!S.over){
+    if(!acted)log('Everyone chills in the cantina listening to space surf rock. Zero crimes. Pure vibes.','dim');
+    if(S.alert>0&&Math.random()<.05){S.alert--;log('The heat fades a little. Alert −1.','good')}
+    if(S.cantinas>0){S.c+=S.cantinas*5;log(`Cantinas earn ${S.cantinas*5}c.`,'gold')}
+    if(S.arena){S.c+=100;log('Monster Arena Pit ticket sales: +100c.','gold')}
+    const b=S.build;
+    if(b==='cantina'){S.cantinas++;log('A new Cantina opens. The neon sign flickers on.','good')}
+    if(b==='sell'){S.cantinas--;S.c+=25;log('You sell a Cantina for 25c. The bartender cries.','dim')}
+    if(b==='arena'){S.arena=1;log('THE MONSTER ARENA PIT IS OPEN!','gold')}
+    if(b==='palace'){S.palace=1;log('The PALACE is complete! An extra contract slot opens.','gold')}
+    if(b==='spaceport'){S.spaceport=1;log('The SPACEPORT OFFICE opens! An extra contract slot opens.','gold')}
+    if(b==='library'){S.library=1;log('The BESTIARY LIBRARY opens! Monster Hunt missions get +1 die.','gold')}
+    S.build=null;
+    checkOver();
+  }
   S.missions.forEach((m,i)=>{if(m){m.timer--;if(m.timer<=0){log(`Contract "${MT[m.type].name}" expired.`,'dim');S.missions[i]=null}}});
-  // refill those that were empty before this turn processed (dropped) and any consumed by mission earlier
-  fill();
-  S.turn++;S.bailed=false;S.order={kind:'idle'};
-  if(!S.over){log(`— Turn ${S.turn} —`,'turn');setNews()}
+  S.items.forEach(x=>{if(x.cd>0)x.cd--});S.turn++;fill();S.agents.forEach(a=>{a.bailed=false;a.order={kind:'idle'}});
+  if(!S.over){log(`— Turn ${S.turn} —`,'turn');setNews();announce();assignPatrol()}
   if(S.arena&&!S.over&&!S.won){S.won=1;S.over={win:true,msg:`The Monster Mash Arena Pit roars open on turn ${S.turn-1}. Stable income and entertainment for life. The Syndicate is eternal.`}}
   busy=false;render();if(S.over)finish();
 }
 
-async function runMission(i){
-  const m=S.missions[i],d=MT[m.type];
+async function runMission(i,parts){try{await runMission0(i,parts)}finally{parts.forEach(consumeItem)}}
+async function runMission0(i,parts){
+  const m=S.missions[i],d=MT[m.type],e=eff(m);
   S.missions[i]=null;
-  if(m.type==='bribe'){if(S.c<100){log('You cannot afford the bribe money anymore. Mission cancelled.','bad');return}S.c-=100}
-  // caught?
+  if(d.cost){if(S.c<d.cost){log('You cannot afford the bribe money anymore. Mission cancelled.','bad');return}S.c-=d.cost}
+  const names=parts.map(a=>a.name).join(' & ');
+  // police
   if(Math.random()<catchP(m)){
     const target=1+Math.ceil(S.alert/2);
-    const ch=await modal(`<h2>🚨 POLICE! 🚨</h2><p>Space Police block the way during <b>${d.name}</b>. Alert ${S.alert} means they came prepared. Pick how Nemo gets out of this.<br><span class="small">Need ${target} successes. Resisting arrest is LEGAL. You already broke the law.</span></p>`,
-      [{label:`Bluff (Charm ${sv('charm')})`,val:'charm'},{label:`Shoot ⚠ (Power ${sv('power')})`,val:'power'},{label:`Hide (Sneak ${sv('sneak')})`,val:'sneak'},{label:`Defend (Org ${sv('org')})`,val:'org'}]);
-    const dice=roll(sv(ch));const sc=scoreOf(dice);const ok=sc>=target;
-    let extra='';
-    if(ch==='power'&&faux(dice)){S.hp--;extra='<p class="bad" style="color:var(--red)">Faux! A stray laser hits Nemo. −1 HP.</p>';log('Shoot-out! Nemo takes a hit. −1 HP.','bad')}
-    await modal(`<h2>${ok?'ESCAPED!':'BUSTED!'}</h2><div>${diceHTML(dice)}</div><p>${sc} / ${target} successes.</p>${extra}<p>${ok?'Nemo slips away and you carry on with the job.':'Cuffs on. Nemo is hauled off to a Republic cell. Contract lost.'}</p>`,[{label:'OK',val:1}]);
-    if(S.hp<=0){S.over={win:false,msg:'Nemo falls in the shootout. Captain of the Nostromo, gone. The Syndicate has no agents left. Game over.'};return}
-    if(!ok){S.jailed=true;log(`Nemo is jailed during ${d.name}. Bail: 100c.`,'bad');S.rested=false;
-      if(S.c<100)S.over={win:false,msg:'Nemo is captured and you cannot afford the 100c bail. The Syndicate folds. Game over.'};return}
-    log(`Nemo escapes the police using ${ch==='charm'?'Bluff':ch==='power'?'Shoot':ch==='sneak'?'Hide':'Defend'}.`,'good');
+    const tv=k=>{const t=team(parts,k);return t.base+t.old};
+    const btns=[{label:`Bluff (Charm ${tv('charm')})`,val:'charm'},{label:`Shoot ⚠ (Power ${tv('power')})`,val:'power'},{label:`Hide (Sneak ${tv('sneak')})`,val:'sneak'},{label:`Defend (Org ${tv('org')})`,val:'org'}];
+    if(parts.some(a=>a.item==='escape'))btns.push({label:'🚪 Escape Route (no roll)',val:'escape'});
+    const ch=await modal(`<h2>🚨 POLICE! 🚨</h2><p>Space Police ${m.patrol?'(the patrol cruiser!) ':''}block ${names} during <b>${d.name}</b>. Alert ${S.alert}. Pick how the team gets out of this.<br><span class="small">Need ${target} successes. The two best values count. Resisting arrest is LEGAL. You already broke the law.</span></p>`,btns);
+    if(ch==='escape'){
+      await modal(`<h2>ESCAPED!</h2><p>Escape Route used. No roll needed. The team melts away and carries on with the job.</p>`,[{label:'OK',val:1}]);
+      log(`${names} use the Escape Route and vanish. No roll.`,'good');
+    }else{
+      const dice=roll(tv(ch));const sc=scoreOf(dice);const ok=sc>=target;
+      let extra='';
+      if(ch==='power'&&faux(dice)){const t=hurt(parts,Math.max(0,(S.alert-2)*.1));extra=`<p style="color:var(--red)">Faux! A stray laser blast. ${t}</p>`;log(`Shoot-out! ${t}`,'bad')}
+      let jailed=null;
+      if(!ok){const live=parts.filter(a=>!a.dead);if(live.length){jailed=pick(live);jailed.jailed=true;jailed.order={kind:'idle'}}}
+      await modal(`<h2>${ok?'ESCAPED!':'BUSTED!'}</h2><div>${diceHTML(dice)}</div><p>${sc} / ${target} successes.</p>${extra}<p>${ok?'The team slips away and carries on with the job.':(jailed?`${jailed.name} is hauled off to a Republic cell. Contract lost.`:'The job is blown.')}</p>`,[{label:'OK',val:1}]);
+      if(!ok){if(jailed)log(`${jailed.name} is jailed during ${d.name}. Bail: 100c.`,'bad');return}
+      log(`${names} escape the police (${ch==='charm'?'Bluff':ch==='power'?'Shoot':ch==='sneak'?'Hide':'Defend'}).`,'good');
+    }
   }
+  const live=parts.filter(a=>!a.dead);if(!live.length)return;
   // main test
-  const n=sv(d.stat),bonus=S.rested?1:0;S.rested=false;
-  const dice=roll(n),sc=scoreOf(dice)+bonus,ok=sc>=m.risk,dbl=ok&&sc>=m.risk*2,fx=faux(dice);
-  let rew=0,res='';
+  const tm=team(live,e.stat,libDice(m));if(tm.ra)tm.ra.rested=false;
+  const dice=roll(tm.n),sc=scoreOf(dice),ok=sc>=e.risk,dbl=ok&&sc>=e.risk*2,fx=faux(dice);
+  let res='';
   if(ok){
-    if(m.type==='bribe'){const pct=20+(m.risk-1)*20;const back=pct;S.c+=back;S.alert=Math.max(0,S.alert-1);res=`Alert −1. ${pct}% of the money found its way back: +${back}c.`}
-    else if(m.type==='hunt'){S.monsters++;res=`Monster captured! You now have ${S.monsters}.`}
-    else if(m.type==='goons'){S.goons++;res=`A goon joins the crew. Power is now ${pow()}.`}
-    else{rew=reward(m)*(d.per?S.cantinas:1);S.c+=rew;res=rew?`+${rew}c.`:''}
+    if(d.story){S.done[m.type]=1;res=completeStory(d)}
+    else if(d.recruit){S.agents.push(mkAgent(d.agent));S.recruited[d.agent]=1;res=`${AG[d.agent].name} joins the Syndicate!`;if(d.unlock){S.unlocked[d.unlock]=1;res+=' A storyline contract has entered the pool.'}}
+    else if(m.type==='senator'){S.alert=Math.max(0,S.alert-2);res='Alert −2.'}
+    else if(m.type==='bribe'){const pct=20+(m.risk-1)*20;S.c+=pct;S.alert=Math.max(0,S.alert-1);res=`Alert −1. ${pct}% of the money found its way back: +${pct}c.`}
+    else if(m.type==='hunt'){if(S.monsters>=2){S.c+=200;res='Surplus monster sold to the pit and hatch crowd: +200c.'}else{S.monsters++;res=`Monster captured! You now have ${S.monsters}.`}}
+    else if(m.type==='goons'){S.done.goons=1;S.items.push({id:'goons',cd:0});res='The Goons item joins your stash! Attach it to any agent for +1 Power.'}
+    else if(m.type==='smile'){S.done.smile=1;const g=S.agents.find(x=>x.id==='grim'&&!x.dead);if(g){g.stat.charm++;res=`${g.name} gets +1 Charm for good. His smile is almost friendly.`}else res='Grimlock is not around to enjoy it. The dentist keeps the deposit.';const tb=d.tests[m.opt].bonus;if(tb){S.c+=tb;res+=` Museum loot: +${tb}c.`}}
+    else if(d.payAfter){if(S.c>=d.payAfter){S.c-=d.payAfter;S.nanites+=d.nanites;res=`Paid ${d.payAfter}c. +${d.nanites} Nanites (${S.nanites} in stock).`}else res='You could not pay up, so the supplier walked away with the goods.'}
+    else if(d.item){const got=drawItem();if(got)res=`Acquired: ${ITEMS[got].icon} ${ITEMS[got].name}!`;else{S.c+=d.fallback;res=`The item deck is empty, so you pocket ${d.fallback}c instead.`}}
+    else{const rew=reward(m)*(d.per?S.cantinas:1);S.c+=rew;res=rew?`+${rew}c.`:''}
     if(dbl){S.c+=50;res+=' Double successes! +50c bonus.'}
   }
   const fl=[];
   if(fx){
-    if(!d.legal&&S.alert<5){S.alert++;fl.push('FAUX: the cops caught a whiff. Alert +1.')}
-    if(d.haz){S.hp--;fl.push('FAUX: something went wrong. Nemo takes −1 HP.')}
-    if(!d.legal&&S.alert>=5&&!d.haz)fl.push('FAUX: but Alert is already maxed.');
-    if(!fl.length)fl.push('FAUX happened but this one was clean and legal. Lucky.');
+    if(!e.legal&&S.alert<5){S.alert++;fl.push('FAUX: the cops caught a whiff. Alert +1.')}
+    if(e.haz){const t=hurt(live,Math.max(0,(e.risk-2)*.1));if(t)fl.push('FAUX: something went wrong. '+t)}
+    if(!fl.length)fl.push('FAUX happened, but this one was clean. Lucky.');
   }
   const flav=pick(ok?d.ok:d.no);
-  log(`${d.name} (risk ${m.risk}): ${ok?'success':'failed'}. ${res} ${fl.join(' ')}`.trim(),ok?'good':'bad');
-  await modal(`<h2>${ok?'MISSION COMPLETE':'MISSION FAILED'} — ${d.name}</h2>
-    <p class="small">${STATN[d.stat]} ${n} dice${bonus?' + Rested bonus':''} vs risk ${m.risk}</p>
+  const title=d.tests?`${d.name} — ${d.tests[m.opt].label}`:d.name;
+  log(`${names}: ${title} (risk ${e.risk}): ${ok?'success':'failed'}. ${res} ${fl.join(' ')}`.trim(),ok?'good':'bad');
+  await modal(`<h2>${ok?'MISSION COMPLETE':'MISSION FAILED'}</h2><p><b>${title}</b></p>
+    <p class="small">${names}. ${STATN[e.stat]}: ${tm.desc} = ${tm.n} dice vs risk ${e.risk}</p>
     <div>${diceHTML(dice)}</div><p><b>${sc}</b> successes ${ok?'✔':'✘'}</p>
     <p><i>${flav}</i></p>${res?`<p style="color:var(--green)">${res}</p>`:''}${fl.map(x=>`<p style="color:var(--red)">${x}</p>`).join('')}`,[{label:'Next',val:1}]);
-  if(S.hp<=0)S.over={win:false,msg:'Nemo did not make it. With no agents left, the Syndicate collapses. Game over.'};
+  if(ok&&d.post)await storyPost(m.type);
 }
 
 async function finish(){
   const w=S.over.win;
-  const r=await modal(`<h2>${w?'🏆 SYNDICATE VICTORY':'💀 GAME OVER'}</h2><p>${S.over.msg}</p><p class="small">Turns: ${S.turn} · Credits: ${S.c}c · Cantinas: ${S.cantinas}</p>`,w?[{label:'Keep playing',val:'c'},{label:'New game',val:'n'}]:[{label:'New game',val:'n'}]);
+  const r=await modal(`<h2>${w?'🏆 SYNDICATE VICTORY':'💀 GAME OVER'}</h2><p>${S.over.msg}</p><p class="small">Turns: ${S.turn} · Credits: ${S.c}c · Cantinas: ${S.cantinas} · Agents alive: ${alive().length}</p>`,w?[{label:'Keep playing',val:'c'},{label:'New game',val:'n'}]:[{label:'New game',val:'n'}]);
   if(r==='n'){newGame();render()}else{S.over=null;render()}
 }
 
 /* ---------- render ---------- */
 function pcol(p){return p>.66?'var(--green)':p>.33?'var(--gold)':'var(--red)'}
+function orderText(a){
+  if(a.dead)return'dead';if(a.jailed)return'jailed';if(a.bailed)return'recovering';
+  if(a.order.kind==='rest')return'resting';
+  if(a.order.kind==='mission'&&S.missions[a.order.idx])return MT[S.missions[a.order.idx].type].name;
+  return'idle'}
 function render(){
   const $=id=>document.getElementById(id);
   $('hTurn').textContent=S.turn;$('hCr').textContent=S.c;
   $('hAlert').innerHTML=[1,2,3,4,5].map(i=>`<i class="${i<=S.alert?'on':''}"></i>`).join('');
   $('news').textContent=S.news;
-  $('nTags').innerHTML=(S.jailed?'<span class="tag t-jail">JAILED</span>':'')+(S.rested?'<span class="tag t-rest">RESTED +1</span>':'');
-  $('nStats').innerHTML=`<div class="stat"><span>HP</span><span class="hp">${'♥'.repeat(S.hp)}${'♡'.repeat(Math.max(0,3-S.hp))}</span></div>`+
-    ['sneak','charm','power','org'].map(k=>`<div class="stat"><span>${STATN[k]}</span><b>${sv(k)}${k==='power'&&S.goons?` <small style="color:var(--dim)">(1 + ${S.goons} goon${S.goons>1?'s':''})</small>`:''}</b></div>`).join('')+
-    `<div class="stat"><span>Monsters</span><b>${S.monsters} / 2</b></div>`;
-  const cons=S.build&&(S.build==='cantina'||S.build==='arena');
-  $('empire').innerHTML=`<div class="stat"><span>Cantinas</span><b>${S.cantinas} <small style="color:var(--dim)">(+${S.cantinas*5}c/turn)</small></b></div>
-    <div class="stat"><span>Monster Arena Pit</span><b>${S.arena?'OPEN':cons&&S.build==='arena'?'under construction':'—'}</b></div>`+(cons&&S.build==='cantina'?'<div class="small" style="color:var(--gold)">Cantina under construction…</div>':'');
   const dis=busy||S.over;
-  $('bCan').disabled=dis||(S.c<100&&S.build!=='cantina');$('bCan').classList.toggle('sel',S.build==='cantina');
+  $('agents').innerHTML=S.agents.map(a=>{
+    const alone=a.id==='grim'?' <span title="when working alone">(+1 alone)</span>':'';
+    return `<div class="acard ${a.dead?'dead':''}">${PORT[a.id]}<div class="info">
+      <b class="nm">${a.name}</b> <span class="hp">${'♥'.repeat(Math.max(0,a.hp))}${'♡'.repeat(Math.max(0,a.maxHp-(a.broken||0)-Math.max(0,a.hp)))}${'💔'.repeat(a.broken||0)}</span><br>
+      <span class="st">Sn <b>${a.stat.sneak}</b> · Ch <b>${a.stat.charm}</b> · Pw <b>${a.stat.power}</b>${alone} · Or <b>${a.stat.org}</b></span><br>
+      ${a.jailed?'<span class="tag t-jail">JAILED</span>':''}${a.rested?'<span class="tag t-rest">RESTED +1 die</span>':''}<span class="tag t-ord">${orderText(a)}</span>${itemRow(a)}
+      <div class="btns">
+        <button class="${a.order.kind==='rest'?'sel':''}" ${(dis||!free(a))?'disabled':''} onclick="setAgentOrder('${a.id}','rest')">😴 Rest${(a.broken&&S.nanites>0)?' (−1 Nanites)':''}</button>
+        <button class="${a.order.kind==='idle'&&free(a)?'sel':''}" ${(dis||!free(a))?'disabled':''} onclick="setAgentOrder('${a.id}','idle')">🎶 Idle</button>
+        ${a.jailed?`<button ${(dis||S.c<100)?'disabled':''} onclick="bail('${a.id}')">⛓ Bail 100c</button>`:''}
+      </div></div></div>`}).join('');
+  const cons=S.build==='cantina'||S.build==='arena';
+  $('empire').innerHTML=`<div class="stat"><span>Cantinas</span><b>${S.cantinas} / 10 <small style="color:var(--dim)">(+${S.cantinas*5}c/turn)</small></b></div>
+    <div class="stat"><span>Monsters captured</span><b>${S.monsters} / 2</b></div>
+    <div class="stat"><span>Nanites</span><b>${S.nanites}</b></div>
+    <div class="stat"><span>Spaceport Office</span><b>${S.spaceport?'BUILT (+1 slot)':S.build==='spaceport'?'under construction':'—'}</b></div>
+    <div class="stat"><span>Bestiary Library</span><b>${S.library?'BUILT (+1 die on hunts)':S.build==='library'?'under construction':'—'}</b></div>
+    <div class="stat"><span>Palace</span><b>${S.palace?'BUILT (+1 slot)':S.build==='palace'?'under construction':'—'}</b></div>
+    <div class="stat"><span>Monster Arena Pit</span><b>${S.arena?'OPEN':S.build==='arena'?'under construction':'—'}</b></div>`+(S.build==='cantina'?'<div class="small" style="color:var(--gold)">Cantina under construction…</div>':'');
+  $('bCan').disabled=dis||((S.c<100||S.cantinas>=10)&&S.build!=='cantina');$('bCan').classList.toggle('sel',S.build==='cantina');
   $('bSell').disabled=dis||S.cantinas<1;$('bSell').classList.toggle('sel',S.build==='sell');
   $('bArena').disabled=dis||S.arena||((S.c<1000||S.monsters<2)&&S.build!=='arena');$('bArena').classList.toggle('sel',S.build==='arena');
-  const locked=S.jailed||S.bailed||dis;
-  $('missions').innerHTML=S.missions.map((m,i)=>{
+  $('bPalace').disabled=dis||S.palace||(S.c<1000&&S.build!=='palace');$('bPalace').classList.toggle('sel',S.build==='palace');
+  $('bNanBuy').disabled=dis||S.c<125;$('bNanSell').disabled=dis||S.nanites<1;
+  $('bSpace').disabled=dis||S.spaceport||(S.c<1000&&S.build!=='spaceport');$('bSpace').classList.toggle('sel',S.build==='spaceport');
+  $('bLib').disabled=dis||S.library||(S.c<1000&&S.build!=='library');$('bLib').classList.toggle('sel',S.build==='library');
+  $('items').innerHTML=`<div class="stat"><span>Item deck</span><b>${S.deck.length} left</b></div>`+(S.items.length?`<div class="small">Stash: ${S.items.map(x=>`${ITEMS[x.id].icon} ${ITEMS[x.id].name}${x.cd>0?` (cd ${x.cd})`:''}`).join(', ')}</div>`:'<div class="small">Stash empty. Item contracts fill it.</div>');
+  const avail=S.agents.filter(free);
+  $('missions').innerHTML=S.missions.slice(0,slots()).map((m,i)=>{
     if(!m)return `<div class="mcard empty">A fresh contract is on the way (arrives next turn)…</div>`;
-    const d=MT[m.type],n=sv(d.stat),p=chance(n,m.risk,S.rested?1:0),cp=catchP(m),r=reward(m);
-    const sel=S.order.kind==='mission'&&S.order.idx===i;
-    const pay=m.type==='bribe'?`Costs 100c · refund ${20+(m.risk-1)*20}%`:m.type==='hunt'?'Reward: 1 monster':m.type==='goons'?'Reward: +1 Power':d.per?`${reward(m)}c per cantina (${reward(m)*S.cantinas}c now)`:`${r}c`;
-    return `<div class="mcard ${sel?'sel':''}"><span class="timer ${m.timer<=2?'low':''}">⏳ ${m.timer} turn${m.timer>1?'s':''}</span>
+    const d=MT[m.type],e=eff(m),parts=partsOf(i),cp=catchP(m);
+    let pay='';
+    if(d.recruit)pay=`Reward: <b>${AG[d.agent].name}</b> joins`;
+    else pay=d.item?`Reward: item from deck (${S.deck.length} left) or ${d.fallback}c`:m.type==='senator'?'Costs 200c · Alert −2':m.type==='bribe'?`Costs 100c · refund ${20+(m.risk-1)*20}%`:m.type==='hunt'?(S.monsters>=2?'Reward: +200c (surplus monster)':'Reward: 1 monster'):m.type==='goons'?'Reward: Goons item (+1 Power, cooldown 9)':d.payAfter?`Pay ${d.payAfter}c after success · +${d.nanites} Nanites`:m.type==='smile'?'Reward: Grimlock +1 Charm for good':d.story?'Storyline: unlocks the next chapter':d.per?`${reward(m)}c per cantina (${reward(m)*S.cantinas}c now)`:`${reward(m)}c`;
+    let odds='';
+    if(parts.length){const tm=team(parts,e.stat,libDice(m)),p=chance(tm.n,e.risk);odds=`Success <span class="pct" style="color:${pcol(p)}">${Math.round(p*100)}%</span>`}
+    else odds='<span class="small">assign agents to see odds</span>';
+    if(cp)odds+=` · Caught <span style="color:var(--red)">${Math.round(cp*100)}%</span>`;
+    const tm=parts.length?team(parts,e.stat,libDice(m)):null;
+    const opts=d.tests?`<div style="display:flex;gap:6px;flex-wrap:wrap;margin:6px 0">${d.tests.map((t,k)=>`<button class="pill ${m.opt===k?'sel':''}" ${dis?'disabled':''} onclick="setOpt(${i},${k})">${STATN[t.stat]} ${t.risk} · ${t.label}</button>`).join('')}${d.payOpt?`
+       <button class="pill" ${(dis||S.c<d.payOpt.cost)?'disabled':''} onclick="${d.recruit?'payRecruit':'payStory'}(${i})">💰 ${d.payOpt.label} (${d.payOpt.cost}c, no agent needed)</button>`:''}${d.abandon?`<button class="pill" ${dis?'disabled':''} onclick="abandonStory(${i})">🚫 ${d.abandon.label} (abandon storyline)</button>`:''}</div>`:'';
+    return `<div class="mcard ${d.recruit||d.story?'rec':''} ${parts.length?'sel':''}"><span class="timer ${m.timer<=2?'low':''}">⏳ ${m.timer} turn${m.timer>1?'s':''}</span>
       <h3>${d.name}</h3>
-      <div>${d.legal?'<span class="tag t-legal">LEGAL</span>':'<span class="tag t-ill">ILLEGAL</span>'}${d.haz?'<span class="tag t-haz">HAZARD</span>':''}</div>
-      <p>${d.desc}</p>
-      <div class="mrow"><span>Risk <b>${m.risk}</b> · ${STATN[d.stat]} ${n}d6 · ${pay}</span>
-      <span>Success <span class="pct" style="color:${pcol(p)}">${Math.round(p*100)}%</span>${cp?` · Caught <span style="color:var(--red)">${Math.round(cp*100)}%</span>`:''}</span></div>
-      <div style="margin-top:8px;display:flex;gap:6px"><button ${locked?'disabled':''} onclick="setOrder({kind:'mission',idx:${i}})">${sel?'✔ Selected':'Dispatch Nemo'}</button><button ${dis?'disabled':''} onclick="dropMission(${i})">Drop</button></div></div>`}).join('');
-  $('bRest').disabled=locked;$('bRest').classList.toggle('sel',S.order.kind==='rest');
-  $('bIdle').classList.toggle('sel',S.order.kind==='idle');$('bIdle').disabled=dis;
-  $('bBail').disabled=dis||!S.jailed||S.c<100;$('bBail').style.display=S.jailed?'':'none';
+      <div>${d.from>=LATE_TURN?'<span class="tag t-rec">HIGH STAKES</span>':''}${m.patrol&&!e.legal?'<span class="tag t-patrol" title="Police patrol attached: +20% bust risk">🚓 PATROL +20%</span>':''}${d.recruit?'<span class="tag t-rec">RECRUIT</span>':''}${d.once?'<span class="tag t-rec">ONE SUCCESS</span>':''}${d.story?'<span class="tag t-rec">STORYLINE</span>':''}${d.monster?`<span class="tag t-patrol">🦖 MONSTER HUNT${S.library?' +1 die':''}</span>`:''}${e.legal?'<span class="tag t-legal">LEGAL</span>':'<span class="tag t-ill">ILLEGAL</span>'}${e.haz?'<span class="tag t-haz">HAZARD</span>':''}</div>
+      <p>${d.desc}</p>${opts}
+      <div class="mrow"><span>Risk <b>${e.risk}</b> · ${STATN[e.stat]} · ${pay}</span><span>${odds}</span></div>
+      <div class="assign"><span class="small">Send:</span>${avail.map(a=>{const on=a.order.kind==='mission'&&a.order.idx===i;
+        return `<button class="pill ${on?'sel':''}" ${dis?'disabled':''} onclick="assign(${i},'${a.id}')">${a.name} ${val(a,e.stat,false)}</button>`}).join('')||'<span class="small">nobody free</span>'}
+        <button class="pill" style="margin-left:auto" ${dis?'disabled':''} onclick="dropMission(${i})">Drop</button></div>
+      ${tm?`<div class="team">Test: ${tm.desc} = ${tm.n} dice</div>`:''}</div>`}).join('');
+  const lines=[];
+  S.missions.forEach((m,i)=>{if(m){const p=partsOf(i);if(p.length)lines.push(`${MT[m.type].name}: ${p.map(a=>a.name).join(' + ')}`)}});
+  S.agents.forEach(a=>{if(free(a)&&a.order.kind==='rest')lines.push(`${a.name}: rest`)});
+  if(S.build)lines.push('Build: '+(S.build==='cantina'?'Cantina':S.build==='arena'?'Monster Arena Pit':S.build==='palace'?'Palace':S.build==='spaceport'?'Spaceport Office':S.build==='library'?'Bestiary Library':'sell Cantina'));
+  $('order').innerHTML=lines.length?'Orders → '+lines.join(' · '):'No orders. Everyone is chilling.';
   $('bEnd').disabled=dis;
-  const o=S.order;let t='';
-  if(S.jailed)t='⛓ Nemo is in jail. Bail her out (100c) or she stays there.';
-  else if(o.kind==='mission')t=`Order: ${MT[S.missions[o.idx].type].name}`;
-  else if(o.kind==='rest')t='Order: Rest';
-  else t='Order: chill in the cantina';
-  if(S.build)t+=` · Build: ${S.build==='cantina'?'Cantina':S.build==='arena'?'Monster Arena Pit':'Sell Cantina'}`;
-  $('order').textContent=t;
-  $('log').innerHTML=S.log.slice(-60).map(l=>`<div class="${l.c}">${l.t}</div>`).join('');
+  $('log').innerHTML=S.log.slice(-70).map(l=>`<div class="${l.c}">${l.t}</div>`).join('');
 }
 
 /* ---------- surf rock ---------- */
-let ac,surf=false,tm,step=0;
+let ac,surf=false,tm2,step=0;
 const riff=[0,3,7,3,0,3,7,3,-2,1,5,1,-2,1,5,12];
 function pluck(f,t){const o=ac.createOscillator(),g=ac.createGain(),fl=ac.createBiquadFilter();o.type='sawtooth';o.frequency.value=f;fl.type='lowpass';fl.frequency.value=1800;
   g.gain.setValueAtTime(.09,t);g.gain.exponentialRampToValueAtTime(.001,t+.16);o.connect(fl);fl.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+.18)}
 function toggleSurf(){
   surf=!surf;document.getElementById('surf').textContent='🎸 Surf rock: '+(surf?'on':'off');
   if(surf){ac=ac||new (window.AudioContext||window.webkitAudioContext)();ac.resume();
-    tm=setInterval(()=>{const t=ac.currentTime;const n=riff[step%riff.length];pluck(164.8*Math.pow(2,n/12),t);if(step%4===0){pluck(82.4*Math.pow(2,riff[step%riff.length]/12),t)}step++},120)}
-  else clearInterval(tm)}
+    tm2=setInterval(()=>{const t=ac.currentTime;const n=riff[step%riff.length];pluck(164.8*Math.pow(2,n/12),t);if(step%4===0)pluck(82.4*Math.pow(2,n/12),t);step++},120)}
+  else clearInterval(tm2)}
 
 /* ---------- stars ---------- */
 (function(){const c=document.getElementById('stars'),x=c.getContext('2d');let st=[];
@@ -371,15 +641,16 @@ function toggleSurf(){
 document.getElementById('bCan').onclick=()=>buildOrder('cantina');
 document.getElementById('bSell').onclick=()=>buildOrder('sell');
 document.getElementById('bArena').onclick=()=>buildOrder('arena');
-document.getElementById('bRest').onclick=()=>setOrder({kind:'rest'});
-document.getElementById('bIdle').onclick=()=>setOrder({kind:'idle'});
-document.getElementById('bBail').onclick=bail;
+document.getElementById('bPalace').onclick=()=>buildOrder('palace');
+document.getElementById('bNanBuy').onclick=buyNanites;
+document.getElementById('bSpace').onclick=()=>buildOrder('spaceport');
+document.getElementById('bLib').onclick=()=>buildOrder('library');
+document.getElementById('bNanSell').onclick=sellNanites;
 document.getElementById('bEnd').onclick=endTurn;
 document.getElementById('surf').onclick=toggleSurf;
 newGame();render();
-modal(`<h2>SHADOWSTAR SYNDICATE</h2><p>You are a small, ambitious crime org in space, full of young, dynamic entrepreneurs with an elastic approach to law. Your only agent is <b>Nemo</b>, tentacle girl and captain of the Nostromo.</p>
-<p><b>Goal:</b> capture 2 monsters, save 1000c, and build the <b>Monster Arena Pit</b>.<br><b>Danger:</b> the Galactic Republic's Space Police. Each alert level adds a 10% chance to be caught on illegal jobs.<br><b>Dice:</b> roll d6 equal to the stat. 4-5 = 1 success, 6 = 2. More 1s than 6s is a FAUX.</p>
-<p class="small">Tip: Smuggle and Showtime pay the bills. Or just build a galaxy-wide cantina chain. Nobody will judge.</p>`,[{label:'Let\'s commit some light crimes',val:1}]);
+modal(`<h2>SHADOWSTAR SYNDICATE</h2><p>You are a small, ambitious crime org in space, full of young, dynamic entrepreneurs with an elastic approach to law. Your first agent is <b>Nemo</b>, tentacle girl and captain of the Nostromo.</p>
+<p><b>Goal:</b> capture 2 monsters, save 1000c, and build the <b>Monster Arena Pit</b>.<br><b>Agents:</b> watch the contracts for <span class="tag t-rec">RECRUIT</span> jobs. Green and Grimlock King are out there.<br><b>Teams:</b> every agent gets one task per turn. A team test sums the <b>two best</b> values.<br><b>Dice:</b> roll d6 equal to the total. 4-5 = 1 success, 6 = 2. More 1s than 6s is a FAUX. Rested = +1 die, if the rested agent is one of the two best.</p>`,[{label:'Let\'s commit some light crimes',val:1}]);
 </script>
 </body>
 </html>
