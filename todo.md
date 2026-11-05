@@ -45,4 +45,6 @@ What we loose:
 What we keep:
 - friends we make along
 - items, including one use
-- general story porgress, it does not change mission pool for now. 
+- general story porgress, it does not change mission pool for now.
+
+Moving hideout resets doomclock to 0%, but it starts going up again. We can reposition only once. 
