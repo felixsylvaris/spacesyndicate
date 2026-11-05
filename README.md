@@ -11,6 +11,11 @@ HTML, CSS, JS
 I see my game great and beautiful full of features. So many feautures they collapse into singularity. Generally it will be asymetric boardgame, where player is crime lord in space. 
 We play Jabba the Hutt but without royalities. And we build our empire. And we need to sneak under radar of Galactic Republic, we can corrupt them, bribe officials, support insurgence to keep them busy. 
 Our end goal is to promot crypto bro as chancellor to defund police, maybe start galactic civil war and sell arms to both sides. But that is future feature. 
+Future feature:
+- Chaos Counter
+- Doomclock
+- Base Defense
+- Reposition
 
 ### Minimal Working Version
 So far the game is 3 buttons and the dream. 
